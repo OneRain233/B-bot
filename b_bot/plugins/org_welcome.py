@@ -8,10 +8,8 @@ import base64
 # reply = on_command("?", aliases={"回复", "自动回复"}, priority=5)
 # reply = on_keyword(keywords=['?', '？'], priority=5)
 org_welcome = on_command("welcome", priority=5)
-"""
-07-25 11:20:24 [SUCCESS] nonebot | ONEBOT V11 2492994043 | [notice.group_recall]: {'time': 1658747995, 'self_id': 2492994043, 'post_type': 'notice', 'notice_type': 'group_recall', 'user_id': 1193498985, 'group_id': 912740210, 'operator_id': 1193498985, 'message_id': 2087683988}"""
-
-
+# 问卷
+quiz = on_command("quiz", aliases={"问卷", "问卷调查"}, priority=5)
 
 @org_welcome.handle()
 async def handle_first_receive(bot: Bot, event: Event, state: T_State):
@@ -21,3 +19,8 @@ async def handle_first_receive(bot: Bot, event: Event, state: T_State):
     # base64_data = "data:image/jpeg;base64," + base64.b64encode(img.read()).decode()
 
     await org_welcome.send(MessageSegment.image("https://gchat.qpic.cn/gchatpic_new/2492994043/984900265-2602726215-62A6608E2AF1A3E2E82C7E766C61A66E/0?term=255"))
+
+@quiz.handle()
+async def handle_quiz_receive(bot: Bot, event: Event, state: T_State):
+    msg = "【腾讯文档】2022网络安全协会招新 https://docs.qq.com/form/page/DQU95T2h1dHR4VVFO"
+    await quiz.send(msg)
