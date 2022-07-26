@@ -6,7 +6,7 @@ import base64
 import random
 
 
-lottery = on_command(cmd="lottery", aliases=["抽奖"])
+lottery = on_command("lottery")
 
 @lottery.handle()
 async def lottery_receive(bot: Bot, event: Event, state: T_State):
