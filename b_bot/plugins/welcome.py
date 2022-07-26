@@ -1,16 +1,15 @@
 from nonebot import on_command, on_startswith, on_notice
 from nonebot.typing import T_State
 from nonebot.adapters import Bot, Event
-from nonebot.adapters.onebot.v11 import *
+from nonebot.adapters.onebot.v11 import GroupIncreaseNoticeEvent
 import base64
 
 
 
-welcome = on_notice()
+group_increase = on_notice(_group_increase, priority=10, block=True)
 
 
-# 入群提醒
-@welcome.handle()
-async def welcome_group(bot: Bot, event: GroupIncreaseNoticeEvent, state: T_State):
-    welcome.send(event, "欢迎新人~~~~~~~看下群公告哦(｡･ω･｡)")
+@group_increase.handle()
+async def _group_increase(bot: Bot, event: GroupIncreaseNoticeEvent):
+    return await group_increase.send(MessageSegment.at(event.get_user_id()) + "欢迎新朋友~")
 
