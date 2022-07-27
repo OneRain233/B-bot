@@ -18,7 +18,7 @@ async def handle_first_receive(bot: Bot, event: Event, state: T_State):
     img = open('b_bot/plugins/resources/welcome.jpg', 'rb')
     # base64_data = "data:image/jpeg;base64," + base64.b64encode(img.read()).decode()
 
-    await org_welcome.send(MessageSegment.image("https://gchat.qpic.cn/gchatpic_new/2492994043/984900265-2602726215-62A6608E2AF1A3E2E82C7E766C61A66E/0?term=255"))
+    await org_welcome.send(MessageSegment.image("http://193.203.13.126:8080/directlink/od/QQ_Image_1658889267416.jpg"))
 
 @quiz.handle()
 async def handle_quiz_receive(bot: Bot, event: Event, state: T_State):

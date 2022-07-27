@@ -14,8 +14,8 @@ async def mc_status(bot: Bot, event: PokeNotifyEvent, state: T_State):
     server = JavaServer(host="1.15.105.102", port=10001)
     status = server.status().latency
     msg = """
-    Ping: {}
-    Online: {}
+    Ping: {}   
+    Online: {}    
     """.format(status, server.status().players.online)
     # print(msg)
     await bot.send(event, msg)
