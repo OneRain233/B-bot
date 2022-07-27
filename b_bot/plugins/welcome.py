@@ -36,15 +36,15 @@ async def _seting_handle(bot: Bot, event: Event, state: T_State):
     args = event.message.extract_plain_text().split(' ')
     status = args[1]
     if status == "on":
-        filestream = open(os.path.join(resource_dir, 'config.json'), 'w')
-        j = json.loads(filestream.read())
+        filestream = open(os.path.join(resource_dir, 'config.json'), 'w').readall()
+        j = json.loads(filestream)
         j["group_id"].append(event.group_id)
         filestream.write(json.dumps(j))
         
         await setting.send("欢迎开关已开启")
     elif status == "off":
         filestream = open(os.path.join(resource_dir, 'config.json'), 'w')
-        j = json.loads(filestream.read())
+        j = json.loads(filestream)
         j["group_id"].remove(event.group_id)
         filestream.write(json.dumps(j))
         
