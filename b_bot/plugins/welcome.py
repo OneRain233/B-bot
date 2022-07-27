@@ -54,7 +54,7 @@ async def _seting_handle(bot: Bot, event: Event, state: T_State):
 @group_increase.handle()
 async def _group_increase(bot: Bot, event: GroupIncreaseNoticeEvent):
 
-    welcome_config = json.loads(open(os.path.join(resource_dir, 'welcome.json'), 'r', encoding='utf-8').read())
+    welcome_config = json.loads(open(os.path.join(resource_dir, 'config.json'), 'r', encoding='utf-8').read())
     
     group_id = event.group_id
     if group_id not in welcome_config['group_id']:
