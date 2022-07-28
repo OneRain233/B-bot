@@ -1,4 +1,4 @@
-from nonebot import on_command, on_startswith, require, get_bot
+from nonebot import on_command, on_startswith, require, get_bot, get_driver
 from nonebot.typing import T_State
 from nonebot.adapters import Bot, Event
 from nonebot.adapters import Message
@@ -39,3 +39,15 @@ async def scheduled_job():
     for group_id in welcome_config["temp_group"]:
         bot = get_bot()
         await bot.call_api('send_group_msg', group_id=group_id, message="几点了？体温填了吗？快去填体温～～～～")
+    
+    
+report_master = get_driver().config.dict().get('master', [])
+# 每2s上报
+@scheduler.scheduled_job('interval', seconds=2)
+async def scheduled_report():
+    if report_master == []:
+        return
+
+    bot = get_bot()
+    for master in report_master:
+        await bot.send_private_msg(user_id=master, message="我还活着!!")
