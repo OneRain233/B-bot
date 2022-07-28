@@ -30,8 +30,9 @@ async def handle_first_receive(bot: Bot, event: Event, state: T_State):
     # send img
     pic = os.path.join(resource_dir, 'post.jpg')
     
-
-    await org_welcome.send( MessageSegment.image(img_to_b64(Image.open(pic))))
+    img_url = "https://gchat.qpic.cn/gchatpic_new/2492994043/984900265-2928148383-A5707D9D1CC0E55BB6BFCFDACF13D5A4/0?term=255"
+    # await org_welcome.send( MessageSegment.image(img_to_b64(Image.open(pic))))
+    await org_welcome.send( MessageSegment.image(img_url))
 
 @quiz.handle()
 async def handle_quiz_receive(bot: Bot, event: Event, state: T_State):
