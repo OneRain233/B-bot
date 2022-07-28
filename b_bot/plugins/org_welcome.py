@@ -28,7 +28,7 @@ quiz = on_command("quiz", aliases={"问卷", "问卷调查"}, priority=5)
 async def handle_first_receive(bot: Bot, event: Event, state: T_State):
     # res = await get_data()
     # send img
-    pic = os.path.join(resource_dir, 'welcome.jpg')
+    pic = os.path.join(resource_dir, 'post.jpg')
     
 
     await org_welcome.send( MessageSegment.image(img_to_b64(Image.open(pic))))
