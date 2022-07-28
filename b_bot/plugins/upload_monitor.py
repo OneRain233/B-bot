@@ -30,5 +30,5 @@ async def _monitor(bot: Bot, event: GroupUploadNoticeEvent, state: T_State):
     url = event.file.url
     
     msg = f"{user}上传了文件{filename}\n直链:{url}"
-    bot.send(event, msg)
+    await bot.send(event, msg)
     
