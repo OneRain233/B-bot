@@ -43,7 +43,7 @@ async def scheduled_job():
     
 report_master = get_driver().config.dict().get('master', [])
 # 每2s上报
-@scheduler.scheduled_job('interval', seconds=2)
+@scheduler.scheduled_job('interval', seconds=60*30)
 async def scheduled_report():
     if report_master == []:
         return
