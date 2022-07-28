@@ -14,3 +14,5 @@ services:
       - MAX_WORKERS=1 # 如果你有多个QQ，且存在 self_id 指定，多个 worker 会导致无法找到其他 websocket 连接
     network_mode: bridge
     restart: always
+    volumes:
+      - .:/app # 把当前目录作为宿主机的根目录
