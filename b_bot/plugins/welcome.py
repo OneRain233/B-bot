@@ -2,7 +2,7 @@ from nonebot import on_notice, on_command, permission, CommandGroup
 from nonebot.adapters.onebot.v11.message import Message, MessageSegment
 from nonebot.adapters import Bot, Event
 from nonebot.typing import T_State
-from nonebot.adapters.onebot.v11 import Bot, GroupIncreaseNoticeEvent
+from nonebot.adapters.onebot.v11 import Bot, GroupIncreaseNoticeEvent, GroupDecreaseNoticeEvent
 import os
 import json
 
@@ -11,7 +11,11 @@ async def _group_increase(bot: Bot, event: Event) -> bool:
     return isinstance(event, GroupIncreaseNoticeEvent)
 
 
+async def _group_decrease(bot: Bot, event: Event) -> bool:
+    return isinstance(event, GroupDecreaseNoticeEvent)
+
 group_increase = on_notice(_group_increase, priority=10, block=True)
+group_decrease = on_notice(_group_decrease, priority=10, block=True)
 setting = on_command("welcomeswitch", aliases={"欢迎开关"})
 
 
@@ -80,3 +84,14 @@ async def _group_increase(bot: Bot, event: GroupIncreaseNoticeEvent):
     msg = welcome_config['welcome_msg']
     # msg = "欢迎新朋友加入网络安全协会～\n宣传网页:http://swjtunsa.com/intro\n问卷：https://docs.qq.com/form/page/DQU95T2h1dHR4VVFO"
     return await group_increase.send(MessageSegment.at(event.get_user_id()) + msg)
+
+@group_decrease.handle()
+async def _group_decrease(bot: Bot, event: GroupDecreaseNoticeEvent):
+    welcome_config = json.loads(open(os.path.join(resource_dir, 'config.json'), 'r', encoding='utf-8').read())
+    
+    group_id = event.group_id
+    if group_id not in welcome_config['group_id']:
+        return
+    
+    msg = "你们把人吓跑了！！！！！"
+    return await group_decrease.send(msg)
