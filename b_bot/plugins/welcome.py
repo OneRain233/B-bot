@@ -5,6 +5,8 @@ from nonebot.typing import T_State
 from nonebot.adapters.onebot.v11 import Bot, GroupIncreaseNoticeEvent, GroupDecreaseNoticeEvent
 import os
 import json
+from .pic_gen import img_to_b64, make_jpg_new
+from PIL import Image, ImageDraw, ImageFont
 
 
 async def _group_increase(bot: Bot, event: Event) -> bool:
@@ -63,14 +65,22 @@ async def _seting_handle(bot: Bot, event: Event, state: T_State):
         
     elif status == "test":
         welcome_config = json.loads(open(os.path.join(resource_dir, 'config.json'), 'r', encoding='utf-8').read())
-        
+        print(event)
         group_id = event.group_id
         if group_id not in welcome_config['group_id']:
             return
-        
         msg = welcome_config['welcome_msg']
         # msg = "欢迎新朋友加入网络安全协会～\n宣传网页:http://swjtunsa.com/intro\n问卷：https://docs.qq.com/form/page/DQU95T2h1dHR4VVFO"
         await bot.send(event, msg)
+
+        try:
+            nickname = await bot.get_group_member_info(group_id=group_id, user_id=event.user_id)
+            nickname = nickname['nickname']
+            pic =await make_jpg_new(nickname)
+            await bot.send(event, MessageSegment.image(img_to_b64(Image.open(pic))))
+        except Exception as e:
+            print(e)
+            # await bot.send(event, str(e))
     
 @group_increase.handle()
 async def _group_increase(bot: Bot, event: GroupIncreaseNoticeEvent):
@@ -83,7 +93,16 @@ async def _group_increase(bot: Bot, event: GroupIncreaseNoticeEvent):
     
     msg = welcome_config['welcome_msg']
     # msg = "欢迎新朋友加入网络安全协会～\n宣传网页:http://swjtunsa.com/intro\n问卷：https://docs.qq.com/form/page/DQU95T2h1dHR4VVFO"
-    return await group_increase.send(MessageSegment.at(event.get_user_id()) + msg)
+    await bot.send(event, msg)
+    
+    try:
+        nickname = await bot.get_group_member_info(group_id=group_id, user_id=event.user_id)
+        nickname = nickname['nickname']
+        pic =await make_jpg_new(nickname)
+        await bot.send(event, MessageSegment.image(img_to_b64(Image.open(pic))))
+    except Exception as e:
+        print(e)
+        # await bot.send(event, str(e))
 
 @group_decrease.handle()
 async def _group_decrease(bot: Bot, event: GroupDecreaseNoticeEvent):
