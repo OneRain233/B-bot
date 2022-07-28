@@ -3,6 +3,19 @@ from nonebot.typing import T_State
 from nonebot.adapters import Bot, Event
 from nonebot.adapters.onebot.v11 import *
 import base64
+from PIL import Image, ImageDraw, ImageFont
+from io import BytesIO
+import os
+
+
+def img_to_b64(pic: Image.Image) -> str:
+    buf = BytesIO()
+    pic.save(buf, format="PNG")
+    base64_str = base64.b64encode(buf.getbuffer()).decode()
+    return "base64://" + base64_str
+
+work_dir = os.path.dirname(os.path.abspath(__file__))
+resource_dir = os.path.join(work_dir, 'resources')
 
 
 # reply = on_command("?", aliases={"回复", "自动回复"}, priority=5)
@@ -15,10 +28,10 @@ quiz = on_command("quiz", aliases={"问卷", "问卷调查"}, priority=5)
 async def handle_first_receive(bot: Bot, event: Event, state: T_State):
     # res = await get_data()
     # send img
-    img = open('b_bot/plugins/resources/welcome.jpg', 'rb')
-    # base64_data = "data:image/jpeg;base64," + base64.b64encode(img.read()).decode()
+    pic = os.path.join(resource_dir, 'welcome.jpg')
+    
 
-    await org_welcome.send(MessageSegment.image("http://193.203.13.126:8080/directlink/od/QQ_Image_1658889267416.jpg"))
+    await org_welcome.send( MessageSegment.image(img_to_b64(Image.open(pic))))
 
 @quiz.handle()
 async def handle_quiz_receive(bot: Bot, event: Event, state: T_State):

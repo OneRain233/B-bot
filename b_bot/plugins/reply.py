@@ -19,6 +19,10 @@ reply = on_command("?", priority=5)
 @reply.handle()
 async def handle_first_receive(bot: Bot, event: Event, state: T_State):
     # res = await get_data()
+    welcome_config = json.loads(open(os.path.join(resource_dir, 'config.json'), 'r', encoding='utf-8').read())
+    groups = welcome_config['reply_group']
+    if event.group_id not in groups:
+        return
     await reply.send("?")
 
 # 每天早上8点提醒

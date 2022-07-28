@@ -9,12 +9,29 @@ from PIL import Image, ImageDraw, ImageFont
 import random
 import base64
 from io import BytesIO
+import emoji
+from pilmoji import Pilmoji
 
 pic_gen = on_command("pic_gen", aliases={"邀请函"})
 
 resource_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'resources')
-font_file = os.path.join(resource_dir, 'font.ttf')
+zh_font_file = os.path.join(resource_dir, 'font.ttf')
+emoji_font_file = os.path.join(resource_dir, 'consola.ttf')
 template_file = os.path.join(resource_dir, 'template.jpg')
+logo_file = os.path.join(resource_dir, 'logo.jpg')
+
+def line_break(text: str, max_width: int) -> str:
+    """
+    将文字按照最大宽度进行换行
+    """
+    lines = []
+    while len(text) > max_width:
+        lines.append(text[:max_width])
+        text = text[max_width:]
+    print(lines)
+    return '\n'.join(lines) + "\n" + text
+
+
 
 def img_to_b64(pic: Image.Image) -> str:
     buf = BytesIO()
@@ -22,29 +39,54 @@ def img_to_b64(pic: Image.Image) -> str:
     base64_str = base64.b64encode(buf.getbuffer()).decode()
     return "base64://" + base64_str
 
-async def make_jpg(text: str) -> Image.Image:
-    template = Image.open(template_file)
-    font = ImageFont.truetype(font_file, size=30)
-    draw = ImageDraw.Draw(template)
-    #居中显示文字
+def img_to_b64(pic: Image.Image) -> str:
+    buf = BytesIO()
+    pic.save(buf, format="PNG")
+    base64_str = base64.b64encode(buf.getbuffer()).decode()
+    return "base64://" + base64_str
+
+async def make_jpg_new(text: str) -> Image.Image:
+    logo = Image.open(logo_file)
+    emoji_font = ImageFont.truetype(emoji_font_file, size=30)
+    zh_font = ImageFont.truetype(zh_font_file, size=30)
+    
     text1 = "欢迎"
     text2 = text
     text3 = "加入网络安全协会"
     
-
-
-    text_width1 = draw.textsize(text1, font=font)[0]
-    text_width2 = draw.textsize(text2, font=font)[0]
-    text_width3 = draw.textsize(text3, font=font)[0]
-
-    draw.text(((template.width - text_width1) / 2, 0+700), text1, font=font, fill=(255, 255, 255))
-    draw.text(((template.width - text_width2) / 2, 50+700), text2, font=font, fill=(237, 202, 202))
-    draw.text(((template.width - text_width3) / 2, 100+700), text3, font=font, fill=(255, 255, 255))
-    # draw.text((100, 750), text, font=font, fill=(255, 255, 255))
-    # save the image to a file
+    text1_w, text1_h = zh_font.getsize(text1)
+    text2_w, text2_h = zh_font.getsize(text2)
+    text3_w, text3_h = zh_font.getsize(text3)
+    
+    all_h = text1_h + text2_h + text3_h
+    
+    new_img = Image.new('RGB', (logo.width, logo.height + all_h + 200), (0,0,0))
+    # 居中 自动换行
+    draw = Pilmoji(new_img)
+    start_h = logo.height + 10
+    draw.text(((logo.width - text1_w) / 2, start_h), text1, font=zh_font, fill=(255, 255, 255))
+    
+    max_width = int(logo.width / (zh_font.getsize('A')[0] * 2))
+    
+    text2_lines = line_break(text2, max_width).split('\n')
+    print(text2_lines)
+    start_h = start_h + text1_h + 10
+    for i in range(len(text2_lines)):
+        t_width, t_height = zh_font.getsize(text2_lines[i])
+        tmp_start_h = start_h + i * text2_h
+        # tmp_start_w = (logo.width - t_width) // 2
+        print(start_h)
+        
+        draw.text(((logo.width - t_width) // 2, tmp_start_h), text2_lines[i], font=zh_font, fill=(237, 202, 202))
+    
+    start_h = start_h + len(text2_lines) * text2_h + 30
+    draw.text(((logo.width - text3_w) / 2, start_h ), text3, font=zh_font, fill=(255, 255, 255))
+    # 将logo图片放在新图片上
+    new_img.paste(logo, (0, 0))
+    
     randomFilename = ''.join(random.sample('abcdefghijklmnopqrstuvwxyz0123456789', 8)) + '.jpg'
     savePath = os.path.join(resource_dir, randomFilename)
-    template.save(savePath)
+    new_img.save(savePath)
     return savePath
 
 @pic_gen.handle()
@@ -55,8 +97,11 @@ async def _pic_gen_handle(bot: Bot, event: Event, state: T_State):
         return
     text = ' '.join(args[1:])
     title = '{}'.format(text)
-    pic =await make_jpg(title)
+    pic =await make_jpg_new(title)
     
     await bot.send(event, MessageSegment.image(img_to_b64(Image.open(pic))))
     os.remove(pic)
     return True
+
+if __name__ == "__main__":
+    make_jpg_new("text2_lines")
