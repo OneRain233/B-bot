@@ -16,3 +16,4 @@ services:
     restart: always
     volumes:
       - .:/app # 把当前目录作为宿主机的根目录
+      - /usr/share/fonts:/usr/share/fonts:ro # 把字体文件挂载到宿主机上，以便在容器中使用
