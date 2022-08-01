@@ -41,12 +41,23 @@ async def download_img(url):
         print(e)
         return False
 
+def get_imgs(msg: Message):
+    imgs = []
+    for m in msg:
+        try:
+            seg: MessageSegment = m
+            if m.data['url']:
+                imgs.append(m.data['url'])
+        except:
+            pass
+
+
 @upload_img.handle()
 async def upload_img_handle(bot: Bot, event: Event, state:T_State):
     try:
         msg = event.get_message()
-        msg_seg: MessageSegment = msg[1]
-        img_url = msg_seg.data['url']
+        # msg_seg: MessageSegment = msg[1]
+        img_url = get_imgs(msg)
         filename = await download_img(img_url)
         if filename:
 
