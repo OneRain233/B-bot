@@ -43,14 +43,17 @@ async def download_img(url):
 
 @upload_img.handle()
 async def upload_img_handle(bot: Bot, event: Event, state:T_State):
-    msg = event.get_message()
-    msg_seg: MessageSegment = msg[1]
-    img_url = msg_seg.data['url']
-    filename = await download_img(img_url)
-    if filename:
-        img_url = "file://" + os.path.join(resource_dir, filename)
-        await bot.send(event, MessageSegment.image(img_url))
-    else:
+    try:
+        msg = event.get_message()
+        msg_seg: MessageSegment = msg[1]
+        img_url = msg_seg.data['url']
+        filename = await download_img(img_url)
+        if filename:
+
+            await bot.send(event, MessageSegment.image(img_to_b64(Image.open(os.path.join(resource_dir, filename)))))
+        else:
+            await bot.send(event, "上传失败")
+    except Exception as e:
         await bot.send(event, "上传失败")
 
 
