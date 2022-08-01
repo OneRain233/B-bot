@@ -41,30 +41,33 @@ async def download_img(url):
         print(e)
         return False
 
-def get_imgs(msg: Message):
+def get_imgs(msg):
     imgs = []
     for m in msg:
         try:
             seg: MessageSegment = m
-            if m.data['url']:
-                imgs.append(m.data['url'])
+            if seg.data['url']:
+                imgs.append(seg.data['url'])
         except:
             pass
-
+    return imgs
 
 @upload_img.handle()
 async def upload_img_handle(bot: Bot, event: Event, state:T_State):
     try:
         msg = event.get_message()
-        # msg_seg: MessageSegment = msg[1]
+        msg_seg: MessageSegment = msg[1]
+        # img_url = msg_seg.data['url']
         img_url = get_imgs(msg)
-        filename = await download_img(img_url)
-        if filename:
-
-            await bot.send(event, MessageSegment.image(img_to_b64(Image.open(os.path.join(resource_dir, filename)))))
-        else:
-            await bot.send(event, "上传失败")
+        if len(img_url) == 0:
+            await bot.send(event, '没有图片')
+        for i in img_url:
+            filename = await download_img(i)
+            if filename:
+                await bot.send(event, MessageSegment.image(img_to_b64(Image.open(os.path.join(resource_dir, filename)))))
+                await bot.send(event, '图片上传成功')
+        
     except Exception as e:
-        await bot.send(event, "上传失败")
+        await bot.send(event, "上传失败 {}".format(e))
 
 
