@@ -11,7 +11,7 @@ from PIL import Image, ImageDraw, ImageFont
 import random
 import requests
 
-img_history = on_command("img_history", aliases={"图片历史"})
+img_history = on_command("img_history", aliases={"我要看黑历史","黑历史"})
 upload_img = on_command("upload_img", aliases={"上传图片"})
 
 # resources/img/

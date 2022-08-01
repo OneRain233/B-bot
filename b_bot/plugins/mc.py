@@ -7,10 +7,10 @@ from nonebot.rule import to_me
 from nonebot.params import Arg, CommandArg, ArgPlainText
 from nonebot.adapters.onebot.v11 import Event, PokeNotifyEvent
 # 戳一戳
-mc = on_notice(rule=to_me())
+mc = on_command("mc")
 
 @mc.handle()
-async def mc_status(bot: Bot, event: PokeNotifyEvent, state: T_State):
+async def mc_status(bot: Bot, event: Event, state: T_State):
     server = JavaServer(host="1.15.105.102", port=10001)
     status = server.status().latency
     msg = """
