@@ -101,6 +101,7 @@ async def _group_increase(bot: Bot, event: GroupIncreaseNoticeEvent):
         nickname = nickname['nickname']
         pic =await make_jpg_new(nickname)
         await bot.send(event, MessageSegment.image(img_to_b64(Image.open(pic))))
+        os.remove(pic)
     except Exception as e:
         print(e)
         # await bot.send(event, str(e))
