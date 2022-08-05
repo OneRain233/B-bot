@@ -54,7 +54,7 @@ async def _handlers(bot: Bot, event:Event, matcher: Matcher,
         await bot.send(event, '请输入问题 和 答案')
         return
     question = message[0]
-    answer = message[1:]
+    answer = " ".join(message[1:])
     res = await set_answer(question, answer)
     if res:
         await bot.send(event, "问题：{}\n答案：{}".format(question, answer))
