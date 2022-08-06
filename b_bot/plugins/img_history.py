@@ -13,6 +13,7 @@ import requests
 import hashlib
 
 img_history = on_command("img_history", aliases={"我要看黑历史","黑历史"})
+img_wall = on_command('img_wall', aliases={"图片墙"})
 upload_img = on_command("upload_img", aliases={"上传图片"})
 img_md5_dict = {}
 
@@ -22,6 +23,32 @@ resource_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'resourc
 def get_random_img():
     filelist = os.listdir(resource_dir)
     return random.choice(filelist)
+
+def generate_img_wall():
+    # generate img wall in one img
+    all_imgs = os.listdir(resource_dir)
+    if 'md5sum.json' in all_imgs:
+        all_imgs.remove('md5sum.json')
+    
+    img_num = len(all_imgs)
+    if img_num == 0:
+        return False
+
+    img_width = img_num * 200
+    img_height = 200
+    img = Image.new('RGB', (img_width, img_height), (255, 255, 255))
+    x = 0
+    y = 0
+    for img_name in all_imgs:
+        img_path = os.path.join(resource_dir, img_name)
+        img_obj = Image.open(img_path)
+        img.paste(img_obj, (x, y))
+        x += 200
+        if x >= img_width:
+            x = 0
+            y += 200
+    return img
+
 
 def md5sum_all_img():
     global img_md5_dict
@@ -39,6 +66,15 @@ def md5sum_all_img():
             f.write(json.dumps(md5_dict,indent=4))
 
     img_md5_dict = md5_dict
+
+@img_wall.handle()
+async def _img_wall(bot: Bot, event: Event):
+    img = generate_img_wall()
+    if img:
+        b64 = img_to_b64(img)
+        await bot.send(event, MessageSegment.image(b64))
+    else:
+        await bot.send(event, '没有图片')
 
 
 @img_history.handle()
