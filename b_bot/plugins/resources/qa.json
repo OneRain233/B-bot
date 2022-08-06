@@ -1,7 +1,13 @@
 {
-    "123": "123123",
+    "123": "123",
     "test": "11111",
     "我要看刘老板照片": "爬爬～！！",
     "爬": "你也爬吧",
-    "爬爬": "你也爬吧"
+    "爬爬": "你也爬吧",
+    "ls": "bin home lib32 media root srv var boot initrd.img lib64 mnt run sys vmlinuz dev flag libx32 opt sbin tmp etc lib lost+found proc snap usr",
+    "cat /flag": "flag{Welcome to SWJTU}",
+    "123123": "2222",
+    "cat /etc/passwd": "??????",
+    "+1": "-1",
+    "-1": "+1"
 }
