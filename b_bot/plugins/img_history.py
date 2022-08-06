@@ -13,7 +13,7 @@ import requests
 import hashlib
 
 img_history = on_command("img_history", aliases={"我要看黑历史","黑历史"})
-img_wall = on_command('img_wall', aliases={"图片墙"})
+img_wall = on_command('img_wall', aliases={"黑历史墙"})
 upload_img = on_command("upload_img", aliases={"上传图片"})
 img_md5_dict = {}
 
@@ -34,19 +34,23 @@ def generate_img_wall():
     if img_num == 0:
         return False
 
-    img_width = img_num * 200
-    img_height = 200
+    img_width = 200 * 5
+    img_height = 200 * int(img_num / 5 + 1)
     img = Image.new('RGB', (img_width, img_height), (255, 255, 255))
     x = 0
     y = 0
     for img_name in all_imgs:
         img_path = os.path.join(resource_dir, img_name)
         img_obj = Image.open(img_path)
+        # resize
+        img_obj = img_obj.resize((200, 200), Image.ANTIALIAS)
         img.paste(img_obj, (x, y))
         x += 200
         if x >= img_width:
             x = 0
             y += 200
+
+    
     return img
 
 
