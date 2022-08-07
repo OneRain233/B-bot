@@ -42,13 +42,15 @@ async def make_jpg_new(text: str) -> Image.Image:
     logo = Image.open(logo_file)
     emoji_font = ImageFont.truetype(emoji_font_file, size=30)
     zh_font = ImageFont.truetype(zh_font_file, size=30)
+    name_font = ImageFont.truetype(zh_font_file, size=50)
     
     text1 = "欢迎"
-    text2 = text
+    # text2 = text
+    text2 = "「 {} 」".format(text)
     text3 = "加入网络安全协会"
     
     text1_w, text1_h = zh_font.getsize(text1)
-    text2_w, text2_h = zh_font.getsize(text2)
+    text2_w, text2_h = name_font.getsize(text2)
     text3_w, text3_h = zh_font.getsize(text3)
     
     all_h = text1_h + text2_h + text3_h
@@ -63,14 +65,14 @@ async def make_jpg_new(text: str) -> Image.Image:
     
     text2_lines = line_break(text2, max_width).split('\n')
     print(text2_lines)
-    start_h = start_h + text1_h + 10
+    start_h = start_h + text1_h 
     for i in range(len(text2_lines)):
-        t_width, t_height = zh_font.getsize(text2_lines[i])
+        t_width, t_height = name_font.getsize(text2_lines[i])
         tmp_start_h = start_h + i * text2_h
         # tmp_start_w = (logo.width - t_width) // 2
         print(start_h)
         
-        draw.text(((logo.width - t_width) // 2, tmp_start_h), text2_lines[i], font=zh_font, fill=(237, 202, 202))
+        draw.text(((logo.width - t_width) // 2, tmp_start_h), text2_lines[i], font=name_font, fill="#c6e6e8")
     
     start_h = start_h + len(text2_lines) * text2_h + 30
     draw.text(((logo.width - text3_w) / 2, start_h ), text3, font=zh_font, fill=(255, 255, 255))

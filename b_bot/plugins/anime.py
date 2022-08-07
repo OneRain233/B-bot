@@ -16,6 +16,7 @@ import os
 from PIL import Image, ImageDraw, ImageFont
 from .pic_gen import img_to_b64
 import random
+from .txt2img import *
 
 
 anime_search = on_command('anime_search')
@@ -50,7 +51,7 @@ def format_list(l):
         s = "{} \n {} \n {} \n {} \n".format(i['title'], i['torrent_url'], i['web_url'], i['publish_time'])
         res.append(s)
 
-    return "================\n".join(res)
+    return "================================\n".join(res)
 
 def str_2_img(s):
     # sl = s.split('\n')
@@ -67,9 +68,10 @@ def str_2_img(s):
     font_size = 32
     title = 'Anime'
     text = s
-    img = Txt2Img(font_size)
-    pic = img.save(title, text)
-    msg = MessageSegment.image(pic)
+    img = txt2img(text, "test.png",20, font_path=zh_font_file).save()
+    # img = Txt2Img(font_size)
+    # pic = img.save(title, text)
+    msg = MessageSegment.image(img_to_b64(img))
     return msg
     
 
