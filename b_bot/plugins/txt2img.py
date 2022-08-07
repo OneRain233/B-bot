@@ -37,13 +37,17 @@ class txt2img():
     def warp(self):
         res = ""
         t = self.txt.split("\n")
-        max_char = int(1080 / self.font_size)
+        max_char = int(self.max_width / self.font.getsize("a")[0])
         for i in t:
-            if len(i) > max_char:
+            while(len(i) > max_char):
                 res += i[:max_char] + "\n"
-                res += i[max_char:] + "\n"
-            else:
-                res += i + "\n"
+                i = i[max_char:]
+            res += i + "\n"
+            # if len(i) > max_char:
+            #     res += i[:max_char] + "\n"
+            #     res += i[max_char:] + "\n"
+            # else:
+            #     res += i + "\n"
         return res
 
 
@@ -53,7 +57,7 @@ class txt2img():
         margin = self.margin
         self.txt = self.warp()
         w, h = self.dertermin_txt_size(self.txt, spacing, padding,padding)
-        img = Image.new("RGB", (w,h + margin*3), (0, 0, 0))
+        img = Image.new("RGB", (w,h + margin*2), (0, 0, 0))
         draw = ImageDraw.Draw(img)  
         draw.text((padding, margin), self.txt, (255, 255, 255), font=self.font, spacing=spacing)
 
