@@ -11,14 +11,28 @@ from PIL import Image, ImageDraw, ImageFont
 import random
 import requests
 import hashlib
+from math import ceil
+from nonebot.matcher import Matcher
+from nonebot.params import Arg, CommandArg, ArgPlainText
 
 img_history = on_command("img_history", aliases={"我要看黑历史","黑历史"})
 img_wall = on_command('img_wall', aliases={"黑历史墙"})
 upload_img = on_command("upload_img", aliases={"上传图片"})
+img_settings = on_command("img_settings", aliases={"黑历史设置"})
 img_md5_dict = {}
 
 # resources/img/
 resource_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'resources', 'img')
+
+@img_settings.handle()
+async def _setting(bot: Bot, event:Event, matcher: Matcher, 
+              msg: Message = CommandArg()):
+    args = event.message.extract_plain_text().split(' ')
+    status = args[1]
+    
+    if status == "reload":
+        md5sum_all_img()
+        await bot.send(event, "重载成功")
 
 def get_random_img():
     filelist = os.listdir(resource_dir)
@@ -33,24 +47,43 @@ def generate_img_wall():
     img_num = len(all_imgs)
     if img_num == 0:
         return False
+    img_sz = 600
+    img_width = img_sz * 5
+    img_height = img_sz * ceil(img_num / 5 )
 
-    img_width = 200 * 5
-    img_height = 200 * int(img_num / 5 + 1)
     img = Image.new('RGB', (img_width, img_height), (255, 255, 255))
+    
     x = 0
     y = 0
     for img_name in all_imgs:
-        img_path = os.path.join(resource_dir, img_name)
-        img_obj = Image.open(img_path)
+        try:
+            img_path = os.path.join(resource_dir, img_name)
+            img_obj = Image.open(img_path)
+        except Exception as e:
+            pass
         # resize
-        img_obj = img_obj.resize((200, 200), Image.ANTIALIAS)
+        w,h = img_obj.size
+        crop_size = min(w,h)
+        # middle crop to 
+        crop_pos = (
+            (w - crop_size) / 2,
+            (h - crop_size) / 2,
+            (w + crop_size) / 2,
+            (h + crop_size) / 2
+        )
+        try:
+            img_obj = img_obj.crop(crop_pos)
+            img_obj = img_obj.resize((img_sz, img_sz), Image.ANTIALIAS)
+        except Exception as e:
+            img_obj = img_obj.resize((img_sz, img_sz))
         img.paste(img_obj, (x, y))
-        x += 200
+        x += img_sz
         if x >= img_width:
             x = 0
-            y += 200
+            y += img_sz
 
-    
+    img = img.resize((img_width // 4, img_height // 4))
+    # return img
     return img
 
 
@@ -58,17 +91,20 @@ def md5sum_all_img():
     global img_md5_dict
     md5_file = os.path.join(resource_dir, 'md5sum.json')
     all_img = os.listdir(resource_dir)
+    md5_dict = {}
     for img in all_img:
         if img == 'md5sum.json':
             continue
         md5 = hashlib.md5(open(os.path.join(resource_dir, img), 'rb').read()).hexdigest()
-        with open(md5_file, 'r') as f:
-            md5_dict = json.load(f)
+        # with open(md5_file, 'r') as f:
+        #     md5_dict = json.load(f)
         md5_dict[img] = md5
         
-        with open(md5_file, 'w') as f:
-            f.write(json.dumps(md5_dict,indent=4))
-
+        # with open(md5_file, 'w') as f:
+        #     f.write(json.dumps(md5_dict,indent=4))
+    with open(md5_file, 'w') as f:
+        f.write(json.dumps(md5_dict,indent=4))
+        
     img_md5_dict = md5_dict
 
 @img_wall.handle()
@@ -90,6 +126,7 @@ async def img_handle(bot: Bot, event: Event, state:T_State):
 
 async def download_img(url):
     try:
+        md5sum_all_img()
         r = requests.get(url)
         # save to resources/img/
         filename = str(random.randint(0, 1000000)) + '.png'
