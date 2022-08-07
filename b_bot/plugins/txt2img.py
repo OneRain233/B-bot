@@ -1,6 +1,20 @@
 from multiprocessing.context import SpawnContext
+from random import random
 from PIL import Image, ImageFont, ImageDraw
 import sys
+import time
+from b_bot.plugins.pic_gen import img_to_b64
+from nonebot import on_command, on_startswith, on_notice
+from nonebot.typing import T_State
+from nonebot.adapters import Bot, Event
+from nonebot.adapters import Message
+from mcstatus import JavaServer
+from nonebot.rule import to_me
+from nonebot.params import Arg, CommandArg, ArgPlainText
+from nonebot.adapters.onebot.v11 import Event, PokeNotifyEvent
+from nonebot.adapters.onebot.v11 import MessageSegment
+import os
+import random
 
 
 class txt2img():
@@ -34,12 +48,12 @@ class txt2img():
 
 
     def save(self):
-        padding = 50
-        spacing = 10
-        margin = 10
+        padding = self.padding
+        spacing = self.spacing
+        margin = self.margin
         self.txt = self.warp()
         w, h = self.dertermin_txt_size(self.txt, spacing, padding,padding)
-        img = Image.new("RGB", (w,h + margin*2), (0, 0, 0))
+        img = Image.new("RGB", (w,h + margin*3), (0, 0, 0))
         draw = ImageDraw.Draw(img)  
         draw.text((padding, margin), self.txt, (255, 255, 255), font=self.font, spacing=spacing)
 
@@ -47,5 +61,35 @@ class txt2img():
         # img.show()
         return img
 
-if __name__ == "__main__":
-    txt2img("1231231231231231231231231231123123123123123123123123123123123123\n456\n789", "test.png",20).save()
+txt2img_handler = on_command("txt2img", block=True)
+resource_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'resources')
+zh_font_file = os.path.join(resource_dir, 'font.ttf')
+@txt2img_handler.handle()
+async def _txt2img_handler(bot:Bot, event:Event):
+    args = event.message.extract_plain_text().split(" ")
+    # txt2img font_size txt
+    if len(args) < 3:
+        await bot.send(event, "txt2img font_size txt")
+        return
+    try:
+        txt = " ".join(args[2:])
+        font_size = int(args[1])
+    except Exception as e:
+        await bot.send(event, "txt2img font_size txt\n error: {}".format(e))
+        return
+    filename = str(random.randint(1,10000)) + ".png"
+    filepath = os.path.join(resource_dir, filename)
+    _txt2img = txt2img(txt, filepath, font_size, zh_font_file).save()
+    
+    msg = MessageSegment.image(img_to_b64(_txt2img))
+    await bot.send(event, msg)
+    try:
+        os.remove(filepath)
+    except Exception as e:
+        pass
+      
+    
+
+
+# if __name__ == "__main__":
+#     txt2img("1223\n456\n789", "test.png",20).save()
