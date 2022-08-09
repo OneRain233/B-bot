@@ -1,5 +1,5 @@
 from tokenize import group
-from nonebot import get_driver, on_command, get_bot
+from nonebot import get_driver, on_command, get_bot, on_notice, on_request
 from nonebot.permission import SUPERUSER
 from .config import Config
 from nonebot.matcher import Matcher
@@ -8,6 +8,7 @@ from nonebot.adapters import Message
 from nonebot.typing import T_State
 from nonebot.adapters import Bot, Event
 from nonebot.rule import to_me
+from nonebot.adapters.onebot.v11 import GroupBanNoticeEvent, MessageSegment, GroupRecallNoticeEvent
 
 global_config = get_driver().config.dict()
 # report_master = get_driver().config.dict().get('master', [])
@@ -136,4 +137,18 @@ async def exit_group_got(bot: Bot, matcher: Matcher, group_id: str = ArgPlainTex
     await bot.call_api('set_group_leave', group_id=group_id)
     await exit_group.finish(f"已经退出{group_id}")
     
+group_ban_= on_notice()
+@group_ban_.handle()
+async def group_ban_handle(bot: Bot, event: GroupBanNoticeEvent, state: T_State):
+    ban_type = event.sub_type
+    if ban_type == "ban":
+        await group_ban_.send(f"是谁被禁言了我不说，嘿嘿嘿")
+    elif ban_type == "lift_ban":
+        pass
 
+group_recall = on_notice()
+@group_recall.handle()
+async def group_recall_handle(bot: Bot, event: GroupRecallNoticeEvent, state: T_State):
+    # await group_recall.send("是谁撤回了我不说，嘿嘿嘿{}".format(event))
+    
+    pass
