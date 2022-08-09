@@ -19,7 +19,7 @@ from pathlib import Path
 
 
 class txt2img():
-    def __init__(self, txt, img_path, font_size, font_path):
+    def __init__(self, txt, img_path="test.png", font_size=30, font_path=str(Path() / 'data'/'fonts'/'font.ttf')):
         self.txt = txt
         self.img_path = img_path
         self.font_size = font_size
@@ -44,11 +44,7 @@ class txt2img():
                 res += i[:max_char] + "\n"
                 i = i[max_char:]
             res += i + "\n"
-            # if len(i) > max_char:
-            #     res += i[:max_char] + "\n"
-            #     res += i[max_char:] + "\n"
-            # else:
-            #     res += i + "\n"
+
         return res
 
 

@@ -2,14 +2,19 @@ from nonebot import on_command, on_startswith
 from nonebot.typing import T_State
 from nonebot.adapters import Bot, Event
 from nonebot.adapters import Message
-
+from .txt2img import txt2img
+from nonebot.adapters.onebot.v11 import MessageSegment
+from .pic_gen import img_to_b64
 
 drama = on_command('drama', aliases={'新番', }, priority=5)
 @drama.handle()
 
 async def handle_first_receive(bot: Bot, event: Event, state: T_State):
     res = await get_data()
-    await drama.send(str(res))
+    img = txt2img(res).save()
+    msg = MessageSegment.image(img_to_b64(img))
+    await drama.send(msg)
+    
     # return "\n".join(msglist)\
 
 async def get_data():
@@ -43,4 +48,5 @@ async def get_data():
                 temp = b['pub_time']+" "+b['title']+" "+b['pub_index']
                 msglist.append(temp)
     res = '\n'.join(msglist)
+    
     return res
