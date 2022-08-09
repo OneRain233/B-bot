@@ -1,3 +1,4 @@
+import resource
 from nonebot import on_command, on_startswith, require, get_bot, get_driver, on_message
 from nonebot.typing import T_State
 from nonebot.adapters import Bot, Event
@@ -15,9 +16,11 @@ from nonebot.adapters.onebot.v11 import (
     PokeNotifyEvent,
 )
 import re
+from pathlib import Path
 
 work_dir = os.path.dirname(os.path.abspath(__file__))
-resource_dir = os.path.join(work_dir, 'resources')
+# resource_dir = os.path.join(work_dir, 'resources')
+resource_dir = str(Path() / "data")
 db_file = os.path.join(resource_dir, 'qa.json')
 config_file = os.path.join(resource_dir, 'config.json')
 questions = {}

@@ -1,3 +1,4 @@
+import resource
 from nonebot import on_notice, on_command, permission, CommandGroup
 from nonebot.adapters.onebot.v11.message import Message, MessageSegment
 from nonebot.adapters import Bot, Event
@@ -7,7 +8,7 @@ import os
 import json
 from .pic_gen import img_to_b64, make_jpg_new
 from PIL import Image, ImageDraw, ImageFont
-
+from pathlib import Path
 
 async def _group_increase(bot: Bot, event: Event) -> bool:
     return isinstance(event, GroupIncreaseNoticeEvent)
@@ -22,7 +23,8 @@ setting = on_command("welcomeswitch", aliases={"欢迎开关"})
 
 
 work_dir = os.path.dirname(os.path.abspath(__file__))
-resource_dir = os.path.join(work_dir, 'resources')
+# resource_dir = os.path.join(work_dir, 'resources')
+resource_dir = str(Path() / "data") 
 
 try:
     filestream = open(os.path.join(resource_dir, 'config.json'), 'r')

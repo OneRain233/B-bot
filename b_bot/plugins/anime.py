@@ -16,11 +16,15 @@ from PIL import Image, ImageDraw, ImageFont
 from .pic_gen import img_to_b64
 import random
 from .txt2img import *
+from pathlib import Path
 
 
 anime_search = on_command('anime_search')
-resource_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'resources')
-zh_font_file = os.path.join(resource_dir, 'font.ttf')
+# resource_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'resources')
+resource_dir = Path() / "data" / "resources"
+font_dir = Path() / "data" / "fonts"
+# zh_font_file = os.path.join(resource_dir, 'font.ttf')
+zh_font_file = font_dir / "font.ttf"
 
 async def search_data(key_word):
     url = "https://acg.rip/.xml?term={}".format(key_word)

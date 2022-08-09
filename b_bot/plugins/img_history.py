@@ -1,4 +1,5 @@
 from distutils.command.upload import upload
+import resource
 from nonebot import on_notice, on_command, permission, CommandGroup
 from nonebot.adapters.onebot.v11.message import Message, MessageSegment
 from nonebot.adapters import Bot, Event
@@ -14,6 +15,8 @@ import hashlib
 from math import ceil
 from nonebot.matcher import Matcher
 from nonebot.params import Arg, CommandArg, ArgPlainText
+from pathlib import Path
+
 
 img_history = on_command("img_history", aliases={"我要看黑历史","黑历史"})
 img_wall = on_command('img_wall', aliases={"黑历史墙"})
@@ -22,7 +25,8 @@ img_settings = on_command("img_settings", aliases={"黑历史设置"})
 img_md5_dict = {}
 
 # resources/img/
-resource_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'resources', 'img')
+# resource_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'resources', 'img')
+resource_dir = str(Path() / "data" / "img_history")
 
 @img_settings.handle()
 async def _setting(bot: Bot, event:Event, matcher: Matcher, 

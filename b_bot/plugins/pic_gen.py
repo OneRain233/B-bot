@@ -11,14 +11,19 @@ import base64
 from io import BytesIO
 import emoji
 from pilmoji import Pilmoji
+from pathlib import Path
+
 
 pic_gen = on_command("pic_gen", aliases={"邀请函"})
 
-resource_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'resources')
-zh_font_file = os.path.join(resource_dir, 'font.ttf')
-emoji_font_file = os.path.join(resource_dir, 'consola.ttf')
-template_file = os.path.join(resource_dir, 'template.jpg')
-logo_file = os.path.join(resource_dir, 'logo.jpg')
+# resource_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'resources')
+resource_dir = Path() / "data" / "resources"
+font_dir = Path() / "data" / "fonts"
+# zh_font_file = os.path.join(resource_dir, 'font.ttf')
+zh_font_file = font_dir / "font.ttf"
+# emoji_font_file = os.path.join(resource_dir, 'consola.ttf')
+template_file = resource_dir / "template.jpg"
+logo_file = resource_dir / "logo.jpg"
 
 def line_break(text: str, max_width: int) -> str:
     """
@@ -40,9 +45,9 @@ def img_to_b64(pic: Image.Image) -> str:
 
 async def make_jpg_new(text: str) -> Image.Image:
     logo = Image.open(logo_file)
-    emoji_font = ImageFont.truetype(emoji_font_file, size=30)
-    zh_font = ImageFont.truetype(zh_font_file, size=30)
-    name_font = ImageFont.truetype(zh_font_file, size=50)
+    # emoji_font = ImageFont.truetype(emoji_font_file, size=30)
+    zh_font = ImageFont.truetype(str(zh_font_file), size=30)
+    name_font = ImageFont.truetype(str(zh_font_file), size=50)
     
     text1 = "欢迎"
     # text2 = text

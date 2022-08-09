@@ -1,3 +1,5 @@
+import imp
+import resource
 from nonebot import on_command, on_startswith, require, get_bot, get_driver
 from nonebot.typing import T_State
 from nonebot.adapters import Bot, Event
@@ -5,10 +7,11 @@ from nonebot.adapters import Message
 from nonebot.permission import SUPERUSER
 import json
 import os
+from pathlib import Path
 
-
-work_dir = os.path.dirname(os.path.abspath(__file__))
-resource_dir = os.path.join(work_dir, 'resources')
+# work_dir = os.path.dirname(os.path.abspath(__file__))
+# resource_dir = os.path.join(work_dir, 'resources')
+resource_dir = str(Path() / 'data')
 temp_setting = on_command("welcomeswitch", aliases={"tempeature_switch", "温度开关"}, permission=SUPERUSER)
 
 scheduler = require("nonebot_plugin_apscheduler").scheduler

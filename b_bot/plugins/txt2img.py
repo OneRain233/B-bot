@@ -15,6 +15,7 @@ from nonebot.adapters.onebot.v11 import Event, PokeNotifyEvent
 from nonebot.adapters.onebot.v11 import MessageSegment
 import os
 import random
+from pathlib import Path
 
 
 class txt2img():
@@ -66,8 +67,15 @@ class txt2img():
         return img
 
 txt2img_handler = on_command("txt2img", block=True)
-resource_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'resources')
-zh_font_file = os.path.join(resource_dir, 'font.ttf')
+# resource_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'resources')
+# zh_font_file = os.path.join(resource_dir, 'font.ttf')
+# resource_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'resources')
+resource_dir = Path() / "data" / "resources"
+font_dir = Path() / "data" / "fonts"
+# zh_font_file = os.path.join(resource_dir, 'font.ttf')
+zh_font_file = font_dir / "font.ttf"
+
+
 @txt2img_handler.handle()
 async def _txt2img_handler(bot:Bot, event:Event):
     args = event.message.extract_plain_text().split(" ")
@@ -83,7 +91,7 @@ async def _txt2img_handler(bot:Bot, event:Event):
         return
     filename = str(random.randint(1,10000)) + ".png"
     filepath = os.path.join(resource_dir, filename)
-    _txt2img = txt2img(txt, filepath, font_size, zh_font_file).save()
+    _txt2img = txt2img(txt, filepath, font_size, str(zh_font_file)).save()
     
     msg = MessageSegment.image(img_to_b64(_txt2img))
     await bot.send(event, msg)

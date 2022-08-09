@@ -7,10 +7,14 @@ import os
 from nonebot.adapters.onebot.v11 import MessageSegment
 from ..txt2img import txt2img
 from ..img_history import img_to_b64
+from pathlib import Path
 
+# resource_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'resources')
+resource_dir = Path() / "data" / "resources"
+font_dir = Path() / "data" / "fonts"
+# zh_font_file = os.path.join(resource_dir, 'font.ttf')
+zh_font_file = font_dir / "font.ttf"
 
-resource_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)),"..", 'resources')
-zh_font_file = os.path.join(resource_dir, 'font.ttf')
 ctflist = on_command('ctflist', priority=1, aliases={'我要打ctf'})
 ctfinfo = on_command('ctfinfo', priority=1)
 @ctflist.handle()
