@@ -34,7 +34,7 @@ except FileNotFoundError:
         "welcome_msg": welcome_msg,
         "group_id": []
     }
-    filestream.write(json.dumps(j))
+    filestream.write(json.dumps(j, indent=4, ensure_ascii=False))
     filestream.close()
 
 @setting.handle()
@@ -48,7 +48,7 @@ async def _seting_handle(bot: Bot, event: Event, state: T_State):
             if event.group_id not in j['group_id']:
                 j["group_id"].append(event.group_id)
                 with open(os.path.join(resource_dir, 'config.json'), 'w') as f:
-                    f.write(json.dumps(j))
+                    f.write(json.dumps(j,indent=4,ensure_ascii=False))
                 await bot.send(event, "欢迎开关已开启")
             else:
                 await bot.send(event, "欢迎开关已开启")
@@ -58,7 +58,7 @@ async def _seting_handle(bot: Bot, event: Event, state: T_State):
             if event.group_id in j['group_id']:
                 j["group_id"].remove(event.group_id)
                 with open(os.path.join(resource_dir, 'config.json'), 'w') as f:
-                    f.write(json.dumps(j))
+                    f.write(json.dumps(j,indent=4,ensure_ascii=False))
                 await bot.send(event, "欢迎开关已关闭")
             else:
                 await bot.send(event, "欢迎开关已关闭")
@@ -70,7 +70,7 @@ async def _seting_handle(bot: Bot, event: Event, state: T_State):
         if group_id not in welcome_config['group_id']:
             return
         msg = welcome_config['welcome_msg']
-        # msg = "欢迎新朋友加入网络安全协会～\n宣传网页:http://swjtunsa.com/intro\n问卷：https://docs.qq.com/form/page/DQU95T2h1dHR4VVFO"
+        # msg = "欢迎新朋友加入网络安全协会～\n宣传网页:http://swjtunsa.com/intro\n预报名表：https://docs.qq.com/form/page/DQU95T2h1dHR4VVFO"
         await bot.send(event, msg)
 
         try:

@@ -11,7 +11,6 @@ from nonebot.rule import to_me
 from nonebot.params import Arg, CommandArg, ArgPlainText
 from nonebot.adapters.onebot.v11 import Event, PokeNotifyEvent
 from nonebot.adapters.onebot.v11 import MessageSegment
-from nonebot_plugin_txt2img import Txt2Img
 import os
 from PIL import Image, ImageDraw, ImageFont
 from .pic_gen import img_to_b64
