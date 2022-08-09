@@ -115,4 +115,4 @@ async def _group_decrease(bot: Bot, event: GroupDecreaseNoticeEvent):
         return
 
     msg = "你们把人吓跑了！！！！！"
-    return await group_decrease.send(msg) 
+    return await bot.send(event, msg) 
