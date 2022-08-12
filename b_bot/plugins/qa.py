@@ -90,6 +90,17 @@ async def _handlers(bot: Bot, event:Event, matcher: Matcher,
     except Exception as e:
         question = message[0]
         answer = " ".join(message[1:])
+    if "\\n" in answer:
+        # answer = answer.replace("\\n", "\n")
+        tmp = answer.split("\\n")
+        answer = ""
+        for i in tmp:
+            answer += i.strip() + "\n"
+    if "\\n" in question:
+        tmp = question.split("\\n")
+        question = ""
+        for i in tmp:
+            question += i.strip() + "\n"    
     if not question or not answer:
         await bot.send(event, '请输入问题 和 答案')
         return 

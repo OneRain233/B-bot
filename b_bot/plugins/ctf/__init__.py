@@ -22,7 +22,7 @@ async def _(bot: Bot, event: Event, state: T_State):
     from .ctf_api import ctf_list
     res = ctf_list()
     # print(res)
-    img = txt2img(res, "test.png",20, font_path=zh_font_file).save()
+    img = txt2img(res).save()
     msg = MessageSegment.image(img_to_b64(img))
     await ctflist.send( msg)
 
@@ -65,6 +65,7 @@ async def __(bot: Bot, event: Event, state: T_State):
     num = int(state['num'])
     temp = await get_data(num)
 
-    img = txt2img(temp, "test.png",20, font_path=zh_font_file).save()
+    img = txt2img(temp).save()
     msg = MessageSegment.image(img_to_b64(img))
+    await ctfinfo.send(temp)
     await ctfinfo.finish(msg)

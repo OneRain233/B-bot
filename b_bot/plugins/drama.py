@@ -6,7 +6,7 @@ from .txt2img import txt2img
 from nonebot.adapters.onebot.v11 import MessageSegment
 from .pic_gen import img_to_b64
 
-drama = on_command('drama', aliases={'新番', }, priority=5)
+drama = on_command('drama', aliases={'新番', '番'}, priority=5)
 @drama.handle()
 
 async def handle_first_receive(bot: Bot, event: Event, state: T_State):

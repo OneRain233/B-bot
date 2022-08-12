@@ -113,6 +113,8 @@ def md5sum_all_img():
 
 @img_wall.handle()
 async def _img_wall(bot: Bot, event: Event):
+    await bot.send(event, '删了，爬')
+    return
     img = generate_img_wall()
     if img:
         b64 = img_to_b64(img)
@@ -123,6 +125,8 @@ async def _img_wall(bot: Bot, event: Event):
 
 @img_history.handle()
 async def img_handle(bot: Bot, event: Event, state:T_State):
+    await bot.send(event,"删了，爬")
+    return
     img = get_random_img()
     img_file = os.path.join(resource_dir, img)
     img = Image.open(img_file)

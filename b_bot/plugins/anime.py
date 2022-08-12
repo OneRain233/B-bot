@@ -71,7 +71,7 @@ def str_2_img(s):
     font_size = 32
     title = 'Anime'
     text = s
-    img = txt2img(text, "test.png",20, font_path=zh_font_file).save()
+    img = txt2img(text).save()
     # img = Txt2Img(font_size)
     # pic = img.save(title, text)
     msg = MessageSegment.image(img_to_b64(img))
