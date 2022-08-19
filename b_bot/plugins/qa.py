@@ -39,9 +39,40 @@ async def _setting(bot: Bot, event:Event, matcher: Matcher,
     if status == "reload":
         get_all_questions()
         await bot.send(event, "重载成功")
+    elif status == "on":
+        with open(config_file, 'r', encoding='utf-8') as f:
+            config = json.load(f)
+            if event.group_id not in config['qa']:
+                
+                config['qa'].append(event.group_id)
+                
+                with open(config_file, 'w', encoding='utf-8') as f:
+                    json.dump(config, f, ensure_ascii=False, indent=4)
+                    await bot.send(event, "添加成功")
+                    return True
+            else:
+                await bot.send(event, "已经开启过了")
+                
+    elif status == "off":
+        with open(config_file, 'r', encoding='utf-8') as f:
+            config = json.load(f)
+            if event.group_id in config['qa']:
+                config['qa'].remove(event.group_id)
+                with open(config_file, 'w', encoding='utf-8') as f:
+                    json.dump(config, f, ensure_ascii=False, indent=4)
+                    await bot.send(event, "关闭成功")
+                    return True
+            else:
+                await bot.send(event, "没有开启过")
         
 
 async def get_answer(question):
+    # match the question 
+    # _quesions = questions.keys()
+    # for q in _quesions:
+    #     if q in question:
+    #         return questions[q]
+    # return None
     return questions.get(question, None)
 
 async def set_answer(question, answer):
@@ -115,6 +146,10 @@ async def _handlers(bot: Bot, event:Event, matcher: Matcher,
     
 @qa.handle()
 async def _qa(bot:Bot,event: MessageEvent):
+    config = open(config_file, 'r', encoding='utf-8')
+    j = json.load(config)
+    if event.group_id not in j['qa']:
+        return
     message = event.message.extract_plain_text().strip().split()
     if not message:
         return

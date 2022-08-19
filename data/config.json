@@ -1,14 +1,1 @@
-{
-    "welcome_msg": "欢迎新朋友加入网络安全协会～\n宣传网页:http://swjtunsa.com/intro\n预报名表：https://docs.qq.com/form/page/DQU95T2h1dHR4VVFO",
-    "group_id": [
-        912740210,
-        984900265
-    ],
-    "temp_group": [
-        984900265
-    ],
-    "temp_msg": "在？填个体温!",
-    "reply_group": [
-        984900265
-    ]
-}
+{"welcome_msg": "\u6b22\u8fce\u65b0\u670b\u53cb\u52a0\u5165\u7f51\u7edc\u5b89\u5168\u534f\u4f1a\uff5e\n\u5ba3\u4f20\u7f51\u9875:http://swjtunsa.com/intro\n\u9884\u62a5\u540d\u8868\uff1ahttps://docs.qq.com/form/page/DQU95T2h1dHR4VVFO", "group_id": [912740210, 984900265], "temp_group": [984900265, 912740210], "temp_msg": "\u5728\uff1f\u586b\u4e2a\u4f53\u6e29!", "reply_group": [984900265], "qa": [984900265, 912740210]}

@@ -81,7 +81,16 @@ async def _txt2img_handler(bot:Bot, event:Event):
         return
     try:
         txt = " ".join(args[2:])
+        if "\\n" in txt:
+            # answer = answer.replace("\\n", "\n")
+            tmp = txt.split("\\n")
+            txt = ""
+            for i in tmp:
+                txt += i.strip() + "\n"
         font_size = int(args[1])
+        if font_size > 500:
+            await bot.send(event, "这么大 你爬吧")
+            return
     except Exception as e:
         await bot.send(event, "txt2img font_size txt\n error: {}".format(e))
         return
