@@ -1,3 +1,7 @@
+addition:
+  black_list: []
+  mode: 0
+  white_list: []
 alike:
   black_list: []
   mode: 0
@@ -27,6 +31,14 @@ back_to_work:
   mode: 0
   white_list: []
 bite:
+  black_list: []
+  mode: 0
+  white_list: []
+blood_pressure:
+  black_list: []
+  mode: 0
+  white_list: []
+call_110:
   black_list: []
   mode: 0
   white_list: []
@@ -86,6 +98,10 @@ garbage:
   black_list: []
   mode: 0
   white_list: []
+gun:
+  black_list: []
+  mode: 0
+  white_list: []
 hammer:
   black_list: []
   mode: 0
@@ -135,6 +151,10 @@ marriage:
   mode: 0
   white_list: []
 my_friend:
+  black_list: []
+  mode: 0
+  white_list: []
+mywife:
   black_list: []
   mode: 0
   white_list: []
@@ -190,6 +210,10 @@ punch:
   black_list: []
   mode: 0
   white_list: []
+read_book:
+  black_list: []
+  mode: 0
+  white_list: []
 repeat:
   black_list: []
   mode: 0
@@ -226,6 +250,10 @@ symmetric:
   black_list: []
   mode: 0
   white_list: []
+teach:
+  black_list: []
+  mode: 0
+  white_list: []
 thinkwhat:
   black_list: []
   mode: 0
@@ -259,6 +287,10 @@ universal:
   mode: 0
   white_list: []
 wallpaper:
+  black_list: []
+  mode: 0
+  white_list: []
+walnutpad:
   black_list: []
   mode: 0
   white_list: []
