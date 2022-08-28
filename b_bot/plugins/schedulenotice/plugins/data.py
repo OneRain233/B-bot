@@ -45,13 +45,17 @@ def parse_detail_info(s) -> Dict:
         return {}
     info_pattern = re.compile(r'(.*)  (.*)周.(.*)')
     info = info_pattern.match(s)
+    if info:
 
-    res = {
-        "class_name": info.group(1),
-        "weeks": parse_weeks(info.group(2)),
-        "classroom": info.group(3)
-    }
-    return res
+        res = {
+            "class_name": info.group(1),
+            "weeks": parse_weeks(info.group(2)),
+            "classroom": info.group(3)
+        }
+        return res
+    else:
+        return None
+    
 
 def parse_baseinfo(s):
     if not s:
@@ -105,6 +109,8 @@ def get_classes_by_week(week, filepath):
                 # print("没有课")
                 continue
             for c in classes:
+                if not c:
+                    continue
                 c_name = c["class_name"]
                 c_weeks = c["weeks"]
                 c_classroom = c["classroom"]
