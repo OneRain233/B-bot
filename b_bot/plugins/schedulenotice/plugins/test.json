@@ -1,0 +1,489 @@
+{
+    "1": {
+        "1": [
+            {
+                "class_name": "Web应用开发(杨柳)",
+                "weeks": [
+                    2,
+                    3,
+                    4,
+                    5,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "classroom": "X9318"
+            }
+        ],
+        "2": [
+            {
+                "class_name": "Web应用开发(杨柳)",
+                "weeks": [
+                    2,
+                    3,
+                    4,
+                    5,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "classroom": "X9318"
+            }
+        ],
+        "3": [
+            {
+                "class_name": "软件工程理论(赵宏宇)",
+                "weeks": [
+                    2,
+                    3,
+                    4,
+                    5,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "classroom": "X30555  B4282 Lab,G1"
+            },
+            {
+                "class_name": "软件工程项目(赵宏宇)",
+                "weeks": [
+                    16
+                ],
+                "classroom": "X9318"
+            }
+        ],
+        "4": [
+            {
+                "class_name": "形式语言和有限自动机(Turgay Celik)",
+                "weeks": [
+                    4,
+                    5,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14
+                ],
+                "classroom": "X30549  B4282 Lab,G2"
+            },
+            {
+                "class_name": "软件工程项目(赵宏宇)",
+                "weeks": [
+                    16
+                ],
+                "classroom": "X9318"
+            }
+        ],
+        "5": [
+            {
+                "class_name": "操作系统(Jie XU,滕飞)",
+                "weeks": [
+                    2,
+                    3,
+                    4,
+                    5,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "classroom": "X30517  B4282 L"
+            },
+            {
+                "class_name": "软件工程项目(赵宏宇)",
+                "weeks": [
+                    13,
+                    14,
+                    15
+                ],
+                "classroom": "X30555"
+            }
+        ]
+    },
+    "2": {
+        "1": [
+            {
+                "class_name": "软件工程理论(赵宏宇)",
+                "weeks": [
+                    2,
+                    3,
+                    4,
+                    5,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "classroom": "X30555"
+            }
+        ],
+        "2": [],
+        "3": [
+            {
+                "class_name": "算法和数据结构Ⅰ(Zaid Yahya Hasan Al-Huda)",
+                "weeks": [
+                    7
+                ],
+                "classroom": "X30555  B4281 Lab,G1"
+            },
+            {
+                "class_name": "软件工程理论(赵宏宇)",
+                "weeks": [
+                    3,
+                    5,
+                    8,
+                    9
+                ],
+                "classroom": "X9318  B4282 L"
+            },
+            {
+                "class_name": "软件工程项目(赵宏宇)",
+                "weeks": [
+                    13,
+                    14,
+                    15
+                ],
+                "classroom": "X30555"
+            }
+        ],
+        "4": [
+            {
+                "class_name": "数值计算(龙治国)",
+                "weeks": [
+                    4,
+                    7,
+                    10
+                ],
+                "classroom": "X9318  B4279 T"
+            },
+            {
+                "class_name": "算法和数据结构Ⅰ(Zaid Yahya Hasan Al-Huda)",
+                "weeks": [
+                    7
+                ],
+                "classroom": "X30555  B4279 L"
+            },
+            {
+                "class_name": "算法和数据结构Ⅰ(Zaid Yahya Hasan Al-Huda)",
+                "weeks": [
+                    11
+                ],
+                "classroom": "X30555  B4281 Lab,G2"
+            },
+            {
+                "class_name": "软件工程理论(赵宏宇)",
+                "weeks": [
+                    3,
+                    5,
+                    8,
+                    9
+                ],
+                "classroom": "X9318"
+            }
+        ],
+        "5": [
+            {
+                "class_name": "软件工程理论(赵宏宇)",
+                "weeks": [
+                    4,
+                    10
+                ],
+                "classroom": "X9318"
+            }
+        ]
+    },
+    "3": {
+        "1": [
+            {
+                "class_name": "操作系统(滕飞)",
+                "weeks": [
+                    4,
+                    7,
+                    10
+                ],
+                "classroom": "X9318  B4276 Lab,G1"
+            },
+            {
+                "class_name": "操作系统(滕飞)",
+                "weeks": [
+                    13
+                ],
+                "classroom": "X9318"
+            }
+        ],
+        "2": [
+            {
+                "class_name": "操作系统(滕飞)",
+                "weeks": [
+                    4,
+                    7,
+                    10
+                ],
+                "classroom": "X9318  B4276 Lab,G1"
+            },
+            {
+                "class_name": "操作系统(滕飞)",
+                "weeks": [
+                    13
+                ],
+                "classroom": "X9318  B4279 L"
+            },
+            {
+                "class_name": "算法和数据结构Ⅰ(Zaid Yahya Hasan Al-Huda)",
+                "weeks": [
+                    5
+                ],
+                "classroom": "X30555  B4279 L"
+            },
+            {
+                "class_name": "算法和数据结构Ⅰ(Zaid Yahya Hasan Al-Huda)",
+                "weeks": [
+                    8,
+                    9
+                ],
+                "classroom": "X30555  B4280 L"
+            },
+            {
+                "class_name": "用户界面(李崇寿)",
+                "weeks": [
+                    14,
+                    15,
+                    16
+                ],
+                "classroom": "X30549"
+            }
+        ],
+        "3": [
+            {
+                "class_name": "用户界面(李崇寿)",
+                "weeks": [
+                    13
+                ],
+                "classroom": "X30549  B4280 Lab,G1"
+            },
+            {
+                "class_name": "用户界面(李崇寿)",
+                "weeks": [
+                    14,
+                    15
+                ],
+                "classroom": "X9318  B4280 L,G1"
+            },
+            {
+                "class_name": "用户界面(李崇寿)",
+                "weeks": [
+                    16
+                ],
+                "classroom": "X9318"
+            }
+        ],
+        "4": [
+            {
+                "class_name": "算法和数据结构Ⅰ(Zaid Yahya Hasan Al-Huda)",
+                "weeks": [
+                    2,
+                    3,
+                    4
+                ],
+                "classroom": "X30555  B4280 L"
+            },
+            {
+                "class_name": "用户界面(李崇寿)",
+                "weeks": [
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "classroom": "X30555  B4280 Lab,G1"
+            },
+            {
+                "class_name": "用户界面(李崇寿)",
+                "weeks": [
+                    13
+                ],
+                "classroom": "X9318  B4280 Lab,G2"
+            },
+            {
+                "class_name": "用户界面(李崇寿)",
+                "weeks": [
+                    14,
+                    15
+                ],
+                "classroom": "X9318  B4280 Lab,G2"
+            },
+            {
+                "class_name": "用户界面(李崇寿)",
+                "weeks": [
+                    16
+                ],
+                "classroom": "X9318"
+            }
+        ],
+        "5": [
+            {
+                "class_name": "用户界面(李崇寿)",
+                "weeks": [
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "classroom": "X9318  B4280 Lab,G2"
+            },
+            {
+                "class_name": "用户界面(李崇寿)",
+                "weeks": [
+                    13
+                ],
+                "classroom": "X9318"
+            }
+        ]
+    },
+    "4": {
+        "1": [
+            {
+                "class_name": "数值计算(龙治国)",
+                "weeks": [
+                    2,
+                    3,
+                    4,
+                    5,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "classroom": "X30555"
+            }
+        ],
+        "2": [
+            {
+                "class_name": "数值计算(龙治国)",
+                "weeks": [
+                    2,
+                    3,
+                    5,
+                    8,
+                    9,
+                    11,
+                    12
+                ],
+                "classroom": "X30555  B4278 L"
+            },
+            {
+                "class_name": "数值计算(龙治国)",
+                "weeks": [
+                    2,
+                    3,
+                    4,
+                    5,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "classroom": "X30555"
+            }
+        ],
+        "3": [],
+        "4": [
+            {
+                "class_name": "算法和数据结构Ⅰ(Zaid Yahya Hasan Al-Huda)",
+                "weeks": [
+                    10,
+                    12
+                ],
+                "classroom": "X30555  B4282 L"
+            },
+            {
+                "class_name": "软件工程项目(Christina Nick)",
+                "weeks": [
+                    14
+                ],
+                "classroom": "NoRoom"
+            }
+        ],
+        "5": [
+            {
+                "class_name": "工程沟通与交流技巧2(Matthew Ketteringham)",
+                "weeks": [
+                    11,
+                    12
+                ],
+                "classroom": "NoRoom  B4346 L"
+            },
+            {
+                "class_name": "工程沟通与交流技巧2(Matthew Ketteringham,白云)",
+                "weeks": [
+                    2,
+                    4,
+                    7
+                ],
+                "classroom": "X30517"
+            }
+        ]
+    },
+    "5": {
+        "1": null,
+        "2": [
+            {
+                "class_name": "形式语言和有限自动机(Turgay Celik)",
+                "weeks": [
+                    4,
+                    5,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14
+                ],
+                "classroom": "X30549"
+            }
+        ],
+        "3": null,
+        "4": [],
+        "5": null
+    },
+    "6": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null
+    },
+    "7": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null
+    }
+}

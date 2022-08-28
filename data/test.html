@@ -1,0 +1,193 @@
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>课程表打印</title>
+<style type="text/css">
+<!--
+body,td,tr {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 16px;
+}
+td {
+  word-break: break-all; word-wrap:break-word;
+}
+body {
+    margin: 0px;
+}
+@media print{
+.xx {display:none}
+}
+
+.table_border{
+	width:100%;border:0;border-collapse:collapse;border-spacing:0px;
+}
+.table_border tr {
+	background-color: #ffffff;
+}
+.table_border td {
+	border:1px solid #000000 ;height:30px;text-align:center;line-height: 16px;
+}
+.table_border th {
+	border:1px solid #000000 ;height:30px; background-color:#EFECC5; font-weight:bold;text-align:center;
+}
+-->
+</style>
+<script language="javascript" src="../js/Lodop/LodopFuncs.js"></script>
+<script>
+var LODOP; //声明为全局变量   
+var isPreView=parent.document.getElementById("set_print");
+function PrintOneURL(){
+	LODOP=getLodop();  
+	LODOP.PRINT_INIT("课表打印，单次打印(计算机(利兹)2020-01班3304202001)");
+	LODOP.ADD_PRINT_URL(10,10,"99%","100%",document.getElementById("printUrl").value);
+	LODOP.SET_PRINT_PAGESIZE(2, "","","");
+	if(isPreView.checked){
+		LODOP.PREVIEW();
+	}
+	else{
+		LODOP.PRINT();
+	}
+};	
+function PrintTwoURL(){
+	LODOP=getLodop();  
+	LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_同时打印俩网址");
+	LODOP.SET_PRINT_PAGESIZE(2,0,0,"A3");
+	LODOP.ADD_PRINT_URL(39,5,786,531,document.getElementById("T1").value);
+	LODOP.ADD_PRINT_URL(407,779,771,500,document.getElementById("T2").value);	
+	LODOP.SET_PREVIEW_WINDOW(2,0,0,0,0,""); //按适宽模式显示
+	LODOP.PREVIEW();			
+};	
+function PrintIframeByURL(){
+	LODOP=getLodop();  
+	LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_打印Iframe");
+	LODOP.ADD_PRINT_URL(0,0,"100%","100%",document.getElementById("printUrl").value);	
+	LODOP.PREVIEW();			
+};
+
+
+function SetSave(){
+	document.print.submit();
+}
+</script>
+</head>
+
+<body bgcolor="#ffffff">
+<form action="../vatuu/CourseAction" method="post" name="coursetable">
+<input type="hidden" name="setAction" value="printCourseTable"/>
+<input type="hidden" name="key" value="3304202001"/>
+<input type="hidden" name="key_name" value="计算机(利兹)2020-01班"/>
+<input type="hidden" name="queryType" value="class"/>
+<input type="hidden" name="viewType" value="view"/>
+<input type="hidden" name="weekSelect" value="0"/>
+<input type="hidden" name="termSelect" value=""/>
+</form>
+<form action="../vatuu/CourseAction" method="post" name="print" target="_blank">
+<input type="hidden" name="setAction" value="printCourseTableWord"/>
+<input type="hidden" name="key" value="3304202001"/>
+<input type="hidden" name="key_name" value="计算机(利兹)2020-01班"/>
+<input type="hidden" name="queryType" value="class"/>
+<input type="hidden" name="viewType" value="view"/>
+<input type="hidden" name="termSelect" value=""/>
+	<input type="hidden" name="input_term_id" value="107"/>
+	<input type="hidden" name="input_term_name" value="2022-2023第1学期"/>
+<input type="hidden" name="printUrl" id="printUrl" value="../vatuu/CourseAction?setAction=printCourseTable&viewType=view&termSelect=&queryType=class&key=3304202001&key_name=%E8%AE%A1%E7%AE%97%E6%9C%BA%28%E5%88%A9%E5%85%B9%292020-01%E7%8F%AD"/>
+</form>
+<table width="90%" align="center" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td height="40" align="center"><font style="font-size:25px; font-family:'黑体'"><strong>计算机(利兹)2020-01班
+课程表</strong></font></td>
+  </tr>
+  <tr>
+    <td height="25"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="33%">
+        班级：计算机(利兹)2020-01班
+</td>
+        <td width="33%" align="center">打印时间：2022-08-28</td>
+        <td width="33%" align="center">2022-2023第1学期&nbsp;&nbsp;<span class="xx"><a href="javascript:PrintOneURL()">打印</a>&nbsp;&nbsp;<a href="javascript:SetSave()">保存</a></span></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" class="table_border">
+      <tr>
+        <td width="4%" height="25" align="center"><b>讲次</b></td>
+        <td width="14%" height="25" align="center"><b>星期一</b></td>
+        <td width="14%" height="25" align="center"><b>星期二</b></td>
+        <td width="14%" height="25" align="center"><b>星期三</b></td>
+        <td width="14%" height="25" align="center"><b>星期四</b></td>
+        <td width="14%" height="25" align="center"><b>星期五</b></td>
+        <td width="13%" height="25" align="center" style="display:"><b>星期六</b></td>
+        <td width="13%" height="25" align="center" style="display:"><b>星期日</b></td>
+      </tr>
+      <tr>
+<td style="height:70px;" align="center">第1讲<br>(1-2节)</td>
+<td  >B4275&nbsp;Lab,G1&nbsp;/&nbsp;Web应用开发(杨柳)<br>2-5,7-12周&nbsp;X9318<br></td>
+<td  >B4281&nbsp;L&nbsp;/&nbsp;软件工程理论(赵宏宇)<br>2-5,7-12周&nbsp;X30555<br></td>
+<td  >B4276&nbsp;Lab,G1&nbsp;/&nbsp;操作系统(滕飞)<br>4,7,10周&nbsp;X9318<br>B4276&nbsp;Lab,G1&nbsp;/&nbsp;操作系统(滕飞)<br>13周&nbsp;X9318<br></td>
+<td  >B4278&nbsp;L&nbsp;/&nbsp;数值计算(龙治国)<br>2-5,7-12周&nbsp;X30555<br></td>
+<td  >&nbsp;</td>
+<td  style="display:">&nbsp;</td>
+<td  style="display:">&nbsp;</td>
+</tr>
+<tr>
+<td style="height:70px;" align="center">第2讲<br>(3-5节)</td>
+<td  >B4275&nbsp;Lab,G1&nbsp;/&nbsp;Web应用开发(杨柳)<br>2-5,7-12周&nbsp;X9318<br></td>
+<td  >B1397&nbsp;毛泽东思想和中国特色社会主义理论体系概论Ⅰ(江孤迅)<br>1-17周&nbsp;X1412<br></td>
+<td  >B4276&nbsp;Lab,G1&nbsp;/&nbsp;操作系统(滕飞)<br>4,7,10周&nbsp;X9318<br>B4276&nbsp;Lab,G1&nbsp;/&nbsp;操作系统(滕飞)<br>13周&nbsp;X9318<br>B4279&nbsp;L&nbsp;/&nbsp;算法和数据结构Ⅰ(Zaid Yahya Hasan Al-Huda)<br>5周&nbsp;X30555<br>B4279&nbsp;L&nbsp;/&nbsp;算法和数据结构Ⅰ(Zaid Yahya Hasan Al-Huda)<br>8-9周&nbsp;X30555<br>B4280&nbsp;L&nbsp;/&nbsp;用户界面(李崇寿)<br>14-16周&nbsp;X30549<br></td>
+<td  >B4278&nbsp;T&nbsp;/&nbsp;数值计算(龙治国)<br>2-3,5,8-9,11-12周&nbsp;X30555<br>B4278&nbsp;L&nbsp;/&nbsp;数值计算(龙治国)<br>2-5,7-12周&nbsp;X30555<br></td>
+<td  ><div ><div ><div >B4277&nbsp;L&nbsp;/&nbsp;形式语言和有限自动机(Turgay Celik)<br>4-5,7-14周&nbsp;X30549<br></div></div></div></td>
+<td  style="display:">&nbsp;</td>
+<td  style="display:">&nbsp;</td>
+</tr>
+<tr>
+<td style="height:70px;" align="center">第3讲<br>(6-7节)</td>
+<td  >B4281&nbsp;L&nbsp;/&nbsp;软件工程理论(赵宏宇)<br>2-5,7-12周&nbsp;X30555<br>B4282&nbsp;Lab,G1&nbsp;/&nbsp;软件工程项目(赵宏宇)<br>16周&nbsp;X9318<br></td>
+<td  >B4279&nbsp;L&nbsp;/&nbsp;算法和数据结构Ⅰ(Zaid Yahya Hasan Al-Huda)<br>7周&nbsp;X30555<br>B4281&nbsp;Lab,G1&nbsp;/&nbsp;软件工程理论(赵宏宇)<br>3,5,8-9周&nbsp;X9318<br>B4282&nbsp;L&nbsp;/&nbsp;软件工程项目(赵宏宇)<br>13-15周&nbsp;X30555<br></td>
+<td  >B4280&nbsp;L&nbsp;/&nbsp;用户界面(李崇寿)<br>13周&nbsp;X30549<br>B4280&nbsp;Lab,G1&nbsp;/&nbsp;用户界面(李崇寿)<br>14-15周&nbsp;X9318<br>B4280&nbsp;L,G1&nbsp;/&nbsp;用户界面(李崇寿)<br>16周&nbsp;X9318<br></td>
+<td  >B1543&nbsp;形势与政策V(陆宇佳)<br>2,6,10,14周&nbsp;X1210<br></td>
+<td  >&nbsp;</td>
+<td  style="display:">&nbsp;</td>
+<td  style="display:">&nbsp;</td>
+</tr>
+<tr>
+<td style="height:70px;" align="center">第4讲<br>(8-10节)</td>
+<td  ><div ><div >B4277&nbsp;L&nbsp;/&nbsp;形式语言和有限自动机(Turgay Celik)<br>4-5,7-14周&nbsp;X30549<br></div></div>B4282&nbsp;Lab,G2&nbsp;/&nbsp;软件工程项目(赵宏宇)<br>16周&nbsp;X9318<br></td>
+<td  >B4278&nbsp;Lab,G1&nbsp;/&nbsp;数值计算(龙治国)<br>4,7,10周&nbsp;X9318<br>B4279&nbsp;T&nbsp;/&nbsp;算法和数据结构Ⅰ(Zaid Yahya Hasan Al-Huda)<br>7周&nbsp;X30555<br>B4279&nbsp;L&nbsp;/&nbsp;算法和数据结构Ⅰ(Zaid Yahya Hasan Al-Huda)<br>11周&nbsp;X30555<br>B4281&nbsp;Lab,G2&nbsp;/&nbsp;软件工程理论(赵宏宇)<br>3,5,8-9周&nbsp;X9318<br></td>
+<td  >B4279&nbsp;L&nbsp;/&nbsp;算法和数据结构Ⅰ(Zaid Yahya Hasan Al-Huda)<br>2-4周&nbsp;X30555<br>B4280&nbsp;L&nbsp;/&nbsp;用户界面(李崇寿)<br>7-12周&nbsp;X30555<br>B4280&nbsp;Lab,G1&nbsp;/&nbsp;用户界面(李崇寿)<br>13周&nbsp;X9318<br>B4280&nbsp;Lab,G2&nbsp;/&nbsp;用户界面(李崇寿)<br>14-15周&nbsp;X9318<br>B4280&nbsp;Lab,G2&nbsp;/&nbsp;用户界面(李崇寿)<br>16周&nbsp;X9318<br></td>
+<td  ><div >B4279&nbsp;L&nbsp;/&nbsp;算法和数据结构Ⅰ(Zaid Yahya Hasan Al-Huda)<br>10,12周&nbsp;X30555<br>B4282&nbsp;L&nbsp;/&nbsp;软件工程项目(Christina Nick)<br>14周&nbsp;NoRoom<br></div></td>
+<td  >B2417&nbsp;体育健康课程Ⅰ(刘丹)<br>1-17周&nbsp;北区田径场<br></td>
+<td  style="display:">&nbsp;</td>
+<td  style="display:">&nbsp;</td>
+</tr>
+<tr>
+<td style="height:70px;" align="center">第5讲<br>(11-13节)</td>
+<td  ><div ><div >B4276&nbsp;L&nbsp;/&nbsp;操作系统(Jie XU,滕飞)<br>2-5,7-12周&nbsp;X30517<br></div></div>B4282&nbsp;L&nbsp;/&nbsp;软件工程项目(赵宏宇)<br>13-15周&nbsp;X30555<br></td>
+<td  >B4281&nbsp;Lab,G1&nbsp;/&nbsp;软件工程理论(赵宏宇)<br>4,10周&nbsp;X9318<br></td>
+<td  >B4280&nbsp;Lab,G1&nbsp;/&nbsp;用户界面(李崇寿)<br>7-12周&nbsp;X9318<br>B4280&nbsp;Lab,G2&nbsp;/&nbsp;用户界面(李崇寿)<br>13周&nbsp;X9318<br></td>
+<td  ><div ><div ><div ><div >B4346&nbsp;L&nbsp;/&nbsp;工程沟通与交流技巧2(Matthew Ketteringham)<br>11-12周&nbsp;NoRoom<br></div></div>B4346&nbsp;L&nbsp;/&nbsp;工程沟通与交流技巧2(Matthew Ketteringham,白云)<br>2,4,7周&nbsp;X30517<br></div></div></td>
+<td  >&nbsp;</td>
+<td  style="display:">&nbsp;</td>
+<td  style="display:">&nbsp;</td>
+</tr>
+
+
+    </table></td>
+  </tr>
+  
+</table>
+</body>
+</html>
+
