@@ -43,10 +43,11 @@ def parse_weeks(s):
 def parse_detail_info(s) -> Dict:
     if not s:
         return {}
-    info_pattern = re.compile(r'(.*)  (.*)周.(.*)')
+    info_pattern = re.compile(r'[A-Z][0-9]*\s(.*?\(.+?\))\s*(.*?周)\s([A-Z][0-9]*|.*场|NoRoom)')
     info = info_pattern.match(s)
+    print(s)
+    print("------------------",info)
     if info:
-
         res = {
             "class_name": info.group(1),
             "weeks": parse_weeks(info.group(2)),
@@ -58,17 +59,27 @@ def parse_detail_info(s) -> Dict:
     
 
 def parse_baseinfo(s):
+
     if not s:
         return None
-    tmp = s.split("/")
-    tmp = [t.strip() for t in tmp]
-    tmp.pop(0)
-    print(tmp)
-    for i in range(len(tmp)):
-        tmp[i] = parse_detail_info(tmp[i])
+    print(s)
+    # replace \0a with \n
+    s = s.replace("\0a", "")
+    base_pattern = re.compile(r'[A-Z][0-9]*\s.*?\(.+?\)\s*.*?周\s[A-Z][0-9]*|.*场|NoRoom', re.MULTILINE)
+    base = base_pattern.findall(s)
+    print(base)
+    res = []
+    if not base:
+        return res
+    
+    # for i in range(len(base)):
+    #     base[i] = parse_detail_info(base[i])
+    for i in base:
+        res.append(parse_detail_info(i))
+    
 
-
-    return tmp
+    print("+++++++++++++++++++++",res)
+    return res
 
 def generate_json(filepath):
     html_filename = filepath
@@ -76,19 +87,22 @@ def generate_json(filepath):
     html2 = html1.prettify()
 
     df1 = pd.read_html((html2))[2]
-    print(df1)
+    # print(df1)
 
     df1.columns = [i for i in range(len(df1.columns))]
     df1.drop(df1.index[0], inplace=True)
     df1.drop(df1.columns[0], axis=1, inplace=True)
     dic = df1.to_json()
     j  = json.loads(dic)
-
+    # print(j)
     ks = j.keys()
     for k in ks:
         for week in j[k].keys():
+            # print(j[k][week])
             j[k][week] = parse_baseinfo(j[k][week])
-
+    
+    # with open("test11.json", 'w') as f:
+    #     json.dump(j, f, indent=4, ensure_ascii=False)
     
     return j
 
@@ -127,7 +141,7 @@ def get_classes_by_week(week, filepath):
         tmp_res += "\n"
     return tmp_res
     
-
+# get_classes_by_week(2, "soft.html")
 # # if __name__ == "__main__":
 # #     now_week = 1
 # #     j = generate_json("/app/data/test.html")
