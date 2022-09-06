@@ -14,7 +14,7 @@ listener = on_message(priority=1, block=False, rule=to_me())
 
 @listener.handle()
 async def handle_first_receive(bot: Bot, event: Event):
-    message = event.get_message()
+    message = str(event.get_message())
     res = "{}：\n{}".format(event.get_user_id(), message)
     for su in superUsers:
         await bot.send_private_msg(user_id=su, message=res)

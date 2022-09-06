@@ -18,7 +18,5 @@ xml_handle = on_command('xml', priority=1, block=False, rule=to_me())
 
 @xml_handle.handle()
 async def handle_first_receive(cmd = Command(), args = CommandArg()):
-    await xml_handle.send(args)
-    
     await xml_handle.send(MessageSegment.xml(str(args)))
     await xml_handle.finish()
