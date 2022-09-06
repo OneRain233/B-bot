@@ -148,7 +148,10 @@ async def _handlers(bot: Bot, event:Event, matcher: Matcher,
 async def _qa(bot:Bot,event: MessageEvent):
     config = open(config_file, 'r', encoding='utf-8')
     j = json.load(config)
-    if event.group_id not in j['qa']:
+    try:
+        if event.group_id not in j['qa']:
+            return
+    except:
         return
     message = event.message.extract_plain_text().strip().split()
     if not message:

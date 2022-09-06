@@ -1,0 +1,685 @@
+{
+    "value": [
+        {
+            "recipe": [
+                {
+                    "op": "From Base64",
+                    "args": [
+                        "A-Za-z0-9+/=",
+                        true
+                    ]
+                },
+                {
+                    "op": "From UNIX Timestamp",
+                    "args": [
+                        "Milliseconds (ms)"
+                    ]
+                }
+            ],
+            "data": "Mon 26 November 1973 00:53:33.213 UTC",
+            "languageScores": [
+                {
+                    "lang": "pl",
+                    "score": 2557.3160140388804,
+                    "probability": 0
+                },
+                {
+                    "lang": "et",
+                    "score": 2559.653624294912,
+                    "probability": 0
+                },
+                {
+                    "lang": "lt",
+                    "score": 2720.6457670112927,
+                    "probability": 0
+                },
+                {
+                    "lang": "ca",
+                    "score": 2732.0563477316655,
+                    "probability": 0
+                },
+                {
+                    "lang": "sk",
+                    "score": 2823.759550581006,
+                    "probability": 0
+                },
+                {
+                    "lang": "sl",
+                    "score": 2845.688884227968,
+                    "probability": 0
+                },
+                {
+                    "lang": "de",
+                    "score": 2875.559348037489,
+                    "probability": 0
+                },
+                {
+                    "lang": "da",
+                    "score": 2933.9733734487468,
+                    "probability": 0
+                },
+                {
+                    "lang": "fi",
+                    "score": 2934.3916320830485,
+                    "probability": 0
+                },
+                {
+                    "lang": "hr",
+                    "score": 2958.796970418946,
+                    "probability": 0
+                },
+                {
+                    "lang": "ro",
+                    "score": 2970.322195738515,
+                    "probability": 0
+                },
+                {
+                    "lang": "no",
+                    "score": 3004.458387906708,
+                    "probability": 0
+                },
+                {
+                    "lang": "cs",
+                    "score": 3044.4266577956414,
+                    "probability": 0
+                },
+                {
+                    "lang": "lv",
+                    "score": 3060.2254765800235,
+                    "probability": 0
+                },
+                {
+                    "lang": "pt",
+                    "score": 3062.5965837131803,
+                    "probability": 0
+                },
+                {
+                    "lang": "en",
+                    "score": 3110.1519783776275,
+                    "probability": 0
+                },
+                {
+                    "lang": "hu",
+                    "score": 3129.6165929733197,
+                    "probability": 0
+                },
+                {
+                    "lang": "nl",
+                    "score": 3243.9143292565886,
+                    "probability": 0
+                },
+                {
+                    "lang": "nn",
+                    "score": 3259.137465859482,
+                    "probability": 0
+                },
+                {
+                    "lang": "tr",
+                    "score": 3351.4411140003563,
+                    "probability": 0
+                },
+                {
+                    "lang": "it",
+                    "score": 3366.764164924663,
+                    "probability": 0
+                },
+                {
+                    "lang": "es",
+                    "score": 3389.022959791955,
+                    "probability": 0
+                },
+                {
+                    "lang": "vi",
+                    "score": 3424.0703438200107,
+                    "probability": 0
+                },
+                {
+                    "lang": "id",
+                    "score": 3589.7819687714214,
+                    "probability": 0
+                },
+                {
+                    "lang": "fr",
+                    "score": 3660.8036378313204,
+                    "probability": 0
+                },
+                {
+                    "lang": "sv",
+                    "score": 5002.686620441067,
+                    "probability": 0
+                },
+                {
+                    "lang": "sr",
+                    "score": 7024.304847490076,
+                    "probability": 0
+                },
+                {
+                    "lang": "zh",
+                    "score": 7083.10446305335,
+                    "probability": 0
+                },
+                {
+                    "lang": "ko",
+                    "score": 7788.130865837637,
+                    "probability": 0
+                },
+                {
+                    "lang": "el",
+                    "score": 10163.005163982618,
+                    "probability": 0
+                },
+                {
+                    "lang": "ja",
+                    "score": 10690.382594142777,
+                    "probability": 0
+                },
+                {
+                    "lang": "bg",
+                    "score": 12490.5094180873,
+                    "probability": 0
+                },
+                {
+                    "lang": "ru",
+                    "score": 12626.593048096513,
+                    "probability": 0
+                },
+                {
+                    "lang": "uk",
+                    "score": 12808.964242489708,
+                    "probability": 0
+                },
+                {
+                    "lang": "he",
+                    "score": 13111.313841684789,
+                    "probability": 0
+                },
+                {
+                    "lang": "ar",
+                    "score": 16777.82489272085,
+                    "probability": 0
+                },
+                {
+                    "lang": "th",
+                    "score": 17603.03736147102,
+                    "probability": 0
+                },
+                {
+                    "lang": "hi",
+                    "score": 27636.583954115773,
+                    "probability": 0
+                },
+                {
+                    "lang": "fa",
+                    "score": 69017.28340683779,
+                    "probability": 0
+                }
+            ],
+            "fileType": null,
+            "isUTF8": true,
+            "entropy": 4.257580907551284,
+            "matchingOps": [],
+            "useful": false,
+            "matchesCrib": null
+        },
+        {
+            "recipe": [
+                {
+                    "op": "From Base64",
+                    "args": [
+                        "A-Za-z0-9+/=",
+                        true
+                    ]
+                }
+            ],
+            "data": "123123213213",
+            "languageScores": [
+                {
+                    "lang": "zh",
+                    "score": 13289.137291034895,
+                    "probability": 0
+                },
+                {
+                    "lang": "pl",
+                    "score": 13731.20546166485,
+                    "probability": 0
+                },
+                {
+                    "lang": "et",
+                    "score": 13837.274875122459,
+                    "probability": 0
+                },
+                {
+                    "lang": "lt",
+                    "score": 14494.61895797745,
+                    "probability": 0
+                },
+                {
+                    "lang": "ca",
+                    "score": 15158.185385915094,
+                    "probability": 0
+                },
+                {
+                    "lang": "lv",
+                    "score": 15716.194157361751,
+                    "probability": 0
+                },
+                {
+                    "lang": "ja",
+                    "score": 15738.353871682468,
+                    "probability": 0
+                },
+                {
+                    "lang": "ko",
+                    "score": 15743.435217528906,
+                    "probability": 0
+                },
+                {
+                    "lang": "da",
+                    "score": 16021.427628416355,
+                    "probability": 0
+                },
+                {
+                    "lang": "no",
+                    "score": 16075.986105423817,
+                    "probability": 0
+                },
+                {
+                    "lang": "sk",
+                    "score": 16287.612033960731,
+                    "probability": 0
+                },
+                {
+                    "lang": "fi",
+                    "score": 16305.765388942467,
+                    "probability": 0
+                },
+                {
+                    "lang": "sl",
+                    "score": 16765.43437019499,
+                    "probability": 0
+                },
+                {
+                    "lang": "de",
+                    "score": 16854.160817949105,
+                    "probability": 0
+                },
+                {
+                    "lang": "cs",
+                    "score": 16873.14311880683,
+                    "probability": 0
+                },
+                {
+                    "lang": "en",
+                    "score": 17344.00596864428,
+                    "probability": 0
+                },
+                {
+                    "lang": "nn",
+                    "score": 17757.539449273536,
+                    "probability": 0
+                },
+                {
+                    "lang": "tr",
+                    "score": 17823.84331439748,
+                    "probability": 0
+                },
+                {
+                    "lang": "ro",
+                    "score": 17947.16134578054,
+                    "probability": 0
+                },
+                {
+                    "lang": "nl",
+                    "score": 18031.835067321954,
+                    "probability": 0
+                },
+                {
+                    "lang": "hu",
+                    "score": 18077.428366274176,
+                    "probability": 0
+                },
+                {
+                    "lang": "pt",
+                    "score": 18376.479153006723,
+                    "probability": 0
+                },
+                {
+                    "lang": "hr",
+                    "score": 18752.786395370174,
+                    "probability": 0
+                },
+                {
+                    "lang": "vi",
+                    "score": 19135.095646957776,
+                    "probability": 0
+                },
+                {
+                    "lang": "sr",
+                    "score": 19809.51955035799,
+                    "probability": 0
+                },
+                {
+                    "lang": "es",
+                    "score": 20592.905508563585,
+                    "probability": 0
+                },
+                {
+                    "lang": "it",
+                    "score": 20892.156614465905,
+                    "probability": 0
+                },
+                {
+                    "lang": "id",
+                    "score": 21495.849647644747,
+                    "probability": 0
+                },
+                {
+                    "lang": "fr",
+                    "score": 22577.966830769048,
+                    "probability": 0
+                },
+                {
+                    "lang": "uk",
+                    "score": 24559.68478850703,
+                    "probability": 0
+                },
+                {
+                    "lang": "ru",
+                    "score": 25506.557420432786,
+                    "probability": 0
+                },
+                {
+                    "lang": "bg",
+                    "score": 27110.286616379522,
+                    "probability": 0
+                },
+                {
+                    "lang": "ar",
+                    "score": 31267.691333253686,
+                    "probability": 0
+                },
+                {
+                    "lang": "he",
+                    "score": 31780.12682740794,
+                    "probability": 0
+                },
+                {
+                    "lang": "sv",
+                    "score": 33151.04050658412,
+                    "probability": 0
+                },
+                {
+                    "lang": "el",
+                    "score": 33971.63377289299,
+                    "probability": 0
+                },
+                {
+                    "lang": "th",
+                    "score": 43205.58558749878,
+                    "probability": 0
+                },
+                {
+                    "lang": "hi",
+                    "score": 96581.098081097,
+                    "probability": 0
+                },
+                {
+                    "lang": "fa",
+                    "score": 504309.180875838,
+                    "probability": 0
+                }
+            ],
+            "fileType": null,
+            "isUTF8": true,
+            "entropy": 1.5849625007211565,
+            "matchingOps": [
+                {
+                    "op": "From Base64",
+                    "pattern": {},
+                    "args": [
+                        "A-Za-z0-9+/=",
+                        true
+                    ]
+                },
+                {
+                    "op": "From Hex",
+                    "pattern": {},
+                    "args": [
+                        "None"
+                    ]
+                },
+                {
+                    "op": "From Hexdump",
+                    "pattern": {},
+                    "args": []
+                },
+                {
+                    "op": "From UNIX Timestamp",
+                    "pattern": {},
+                    "args": [
+                        "Milliseconds (ms)"
+                    ]
+                }
+            ],
+            "useful": false,
+            "matchesCrib": null
+        },
+        {
+            "recipe": [],
+            "data": "MTIzMTIzMjEzMjEz",
+            "languageScores": [
+                {
+                    "lang": "de",
+                    "score": 6653.320284626951,
+                    "probability": 0
+                },
+                {
+                    "lang": "nl",
+                    "score": 7920.180090800221,
+                    "probability": 0
+                },
+                {
+                    "lang": "hu",
+                    "score": 8085.679503904539,
+                    "probability": 0
+                },
+                {
+                    "lang": "pl",
+                    "score": 8238.421489952632,
+                    "probability": 0
+                },
+                {
+                    "lang": "hr",
+                    "score": 8757.602093397994,
+                    "probability": 0
+                },
+                {
+                    "lang": "sl",
+                    "score": 8812.280169519223,
+                    "probability": 0
+                },
+                {
+                    "lang": "es",
+                    "score": 8828.39489017572,
+                    "probability": 0
+                },
+                {
+                    "lang": "ro",
+                    "score": 8854.688882338172,
+                    "probability": 0
+                },
+                {
+                    "lang": "sk",
+                    "score": 8954.675841711982,
+                    "probability": 0
+                },
+                {
+                    "lang": "pt",
+                    "score": 9102.722360264006,
+                    "probability": 0
+                },
+                {
+                    "lang": "lv",
+                    "score": 9282.01631021704,
+                    "probability": 0
+                },
+                {
+                    "lang": "cs",
+                    "score": 9963.42589827625,
+                    "probability": 0
+                },
+                {
+                    "lang": "tr",
+                    "score": 10363.097854638483,
+                    "probability": 0
+                },
+                {
+                    "lang": "lt",
+                    "score": 10746.1103264176,
+                    "probability": 0
+                },
+                {
+                    "lang": "ca",
+                    "score": 12748.228049423871,
+                    "probability": 0
+                },
+                {
+                    "lang": "en",
+                    "score": 12868.360378059677,
+                    "probability": 0
+                },
+                {
+                    "lang": "fr",
+                    "score": 15405.63095118736,
+                    "probability": 0
+                },
+                {
+                    "lang": "sv",
+                    "score": 15456.009826785561,
+                    "probability": 0
+                },
+                {
+                    "lang": "id",
+                    "score": 15708.558077143562,
+                    "probability": 0
+                },
+                {
+                    "lang": "it",
+                    "score": 15991.892783946207,
+                    "probability": 0
+                },
+                {
+                    "lang": "nn",
+                    "score": 17801.105964009726,
+                    "probability": 0
+                },
+                {
+                    "lang": "da",
+                    "score": 18478.44729374497,
+                    "probability": 0
+                },
+                {
+                    "lang": "no",
+                    "score": 19565.566367413343,
+                    "probability": 0
+                },
+                {
+                    "lang": "et",
+                    "score": 20080.53719848125,
+                    "probability": 0
+                },
+                {
+                    "lang": "fi",
+                    "score": 22247.12339093098,
+                    "probability": 0
+                },
+                {
+                    "lang": "vi",
+                    "score": 30857.787073808573,
+                    "probability": 0
+                },
+                {
+                    "lang": "sr",
+                    "score": 96983.58738201829,
+                    "probability": 0
+                },
+                {
+                    "lang": "zh",
+                    "score": 141398.6678139785,
+                    "probability": 0
+                },
+                {
+                    "lang": "ja",
+                    "score": 270937.3510901691,
+                    "probability": 0
+                },
+                {
+                    "lang": "el",
+                    "score": 272980.06365947716,
+                    "probability": 0
+                },
+                {
+                    "lang": "ko",
+                    "score": 277816.1704460549,
+                    "probability": 0
+                },
+                {
+                    "lang": "bg",
+                    "score": 383513.4689872453,
+                    "probability": 0
+                },
+                {
+                    "lang": "ru",
+                    "score": 458132.966973286,
+                    "probability": 0
+                },
+                {
+                    "lang": "uk",
+                    "score": 464635.88615742687,
+                    "probability": 0
+                },
+                {
+                    "lang": "he",
+                    "score": 469270.04548253963,
+                    "probability": 0
+                },
+                {
+                    "lang": "th",
+                    "score": 479066.6735666667,
+                    "probability": 0
+                },
+                {
+                    "lang": "fa",
+                    "score": 515711.0217047623,
+                    "probability": 0
+                },
+                {
+                    "lang": "ar",
+                    "score": 646477.3852523786,
+                    "probability": 0
+                },
+                {
+                    "lang": "hi",
+                    "score": 994691.6680666636,
+                    "probability": 0
+                }
+            ],
+            "fileType": null,
+            "isUTF8": true,
+            "entropy": 2.5,
+            "matchingOps": [
+                {
+                    "op": "From Base64",
+                    "pattern": {},
+                    "args": [
+                        "A-Za-z0-9+/=",
+                        true
+                    ]
+                }
+            ],
+            "useful": false,
+            "matchesCrib": null
+        }
+    ],
+    "type": 6
+}
