@@ -11,6 +11,7 @@ b_bot/plugins/resources/img/*
 data/img_history/*
 data/schedules/*
 data/russian/*
+*.yaml
 
 # C extensions
 *.so

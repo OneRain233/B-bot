@@ -1,5 +1,5 @@
 import resource
-from nonebot import on_command, on_startswith, require, get_bot, get_driver, on_message
+from nonebot import on_command, on_startswith, require, get_bot, get_driver, on_message, on_regex
 from nonebot.typing import T_State
 from nonebot.adapters import Bot, Event
 from nonebot.adapters import Message
@@ -17,18 +17,56 @@ from nonebot.adapters.onebot.v11 import (
 )
 import re
 from pathlib import Path
+from .pic_gen import img_to_b64
+import random
+from .txt2img import *
+from pathlib import Path
 
 work_dir = os.path.dirname(os.path.abspath(__file__))
 # resource_dir = os.path.join(work_dir, 'resources')
 resource_dir = str(Path() / "data")
 db_file = os.path.join(resource_dir, 'qa.json')
+welcome_db_file = os.path.join(resource_dir, 'welcome.json')
 config_file = os.path.join(resource_dir, 'config.json')
 questions = {}
 
-
+ask = on_regex(r"想问|请问", priority=5, block=False) # 猜你想问
 qa_handler = on_command("qa", aliases={"问答"}, permission=SUPERUSER, priority=1)
 qa_setting = on_command("qa_setting", aliases={"问答"}, permission=SUPERUSER, priority=1)
 qa = on_message(block=False)
+human_help = on_command("human_help", aliases={"人工", "转人工"})
+
+@human_help.handle()
+async def _human_help_handle(bot: Bot, event: Event, state: T_State):
+    human_help_list = await bot.call_api("get_group_member_list", group_id=event.group_id)
+    manager_list = []
+    for i in human_help_list:
+        if i["role"] == "owner" or i["role"] == "admin":
+            manager_list.append(i["user_id"])
+    await human_help.finish("有人需要帮助，" + MessageSegment.at(random.choice(manager_list)) + "为你服务")
+    
+@ask.handle()
+async def _ask_handle(bot: Bot, event: Event, state: T_State):
+    msg = []
+    msg.append("=====猜你想问=====")
+    with open(welcome_db_file, 'r', encoding='utf-8') as f:
+        j = json.load(f)
+    for k in j.keys():
+        msg.append(k)
+    msg = "\n".join(msg)
+    img = txt2img(msg).save()
+    msg = MessageSegment.image(img_to_b64(img))
+    human_help_list = await bot.call_api("get_group_member_list", group_id=event.group_id)
+    manager_list = []
+    for i in human_help_list:
+        if i["role"] == "owner" or i["role"] == "admin":
+            manager_list.append(i["user_id"])
+        
+    await ask.send("猜你想问：\n" + msg + "\n回复问题即可查看答案" + "\n人工 可以转接" )
+    await ask.finish()
+
+        
+        
 
 @qa_setting.handle()
 async def _setting(bot: Bot, event:Event, matcher: Matcher, 
@@ -90,7 +128,13 @@ def get_all_questions():
     with open(db_file, 'r', encoding='utf-8') as f:
         db = json.load(f)
         questions = db
-        return questions
+    #append welcome
+    with open(welcome_db_file, 'r', encoding='utf-8') as f:
+        db = json.load(f)
+        for k in db.keys():
+            questions[k] = db[k]
+        
+    return questions
 
 def parse_args(s):
     q = ""

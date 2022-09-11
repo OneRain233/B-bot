@@ -1,5 +1,5 @@
 import resource
-from nonebot import on_notice, on_command, permission, CommandGroup
+from nonebot import on_notice, on_command, permission, CommandGroup, on_regex
 from nonebot.adapters.onebot.v11.message import Message, MessageSegment
 from nonebot.adapters import Bot, Event
 from nonebot.typing import T_State
@@ -10,15 +10,15 @@ from .pic_gen import img_to_b64, make_jpg_new
 from PIL import Image, ImageDraw, ImageFont
 from pathlib import Path
 
-async def _group_increase(bot: Bot, event: Event) -> bool:
-    return isinstance(event, GroupIncreaseNoticeEvent)
+# async def _group_increase(bot: Bot, event: Event) -> bool:
+#     return isinstance(event, GroupIncreaseNoticeEvent)
 
 
-async def _group_decrease(bot: Bot, event: Event) -> bool:
-    return isinstance(event, GroupDecreaseNoticeEvent)
+# async def _group_decrease(bot: Bot, event: Event) -> bool:
+#     return isinstance(event, GroupDecreaseNoticeEvent)
 
-group_increase = on_notice(_group_increase, priority=10, block=True)
-group_decrease = on_notice(_group_decrease, priority=10, block=True)
+group_increase = on_notice( priority=10, block=True)
+group_decrease = on_notice( priority=10, block=True)
 setting = on_command("welcomeswitch", aliases={"欢迎开关"})
 
 
@@ -38,6 +38,7 @@ except FileNotFoundError:
     }
     filestream.write(json.dumps(j, indent=4, ensure_ascii=False))
     filestream.close()
+
 
 @setting.handle()
 async def _seting_handle(bot: Bot, event: Event, state: T_State):
@@ -81,9 +82,11 @@ async def _seting_handle(bot: Bot, event: Event, state: T_State):
             pic =await make_jpg_new(nickname)
             await bot.send(event, MessageSegment.image(img_to_b64(Image.open(pic))))
             os.remove(pic)
+            await group_increase.finish()
         except Exception as e:
             print(e)
             # await bot.send(event, str(e))
+            await group_increase.finish()
 
 @group_increase.handle()
 async def _group_increase(bot: Bot, event: GroupIncreaseNoticeEvent):
@@ -104,9 +107,11 @@ async def _group_increase(bot: Bot, event: GroupIncreaseNoticeEvent):
         pic =await make_jpg_new(nickname)
         await bot.send(event, MessageSegment.image(img_to_b64(Image.open(pic))))
         os.remove(pic)
+        await group_increase.finish()
     except Exception as e:
         print(e)
         # await bot.send(event, str(e))
+        await group_increase.finish()
 
 @group_decrease.handle()
 async def _group_decrease(bot: Bot, event: GroupDecreaseNoticeEvent):
@@ -117,4 +122,4 @@ async def _group_decrease(bot: Bot, event: GroupDecreaseNoticeEvent):
         return
 
     msg = "你们把人吓跑了！！！！！"
-    return await bot.send(event, msg) 
+    await group_decrease.finish(msg)

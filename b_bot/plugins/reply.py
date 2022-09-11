@@ -83,7 +83,6 @@ async def scheduled_job():
         bot = get_bot()
         await bot.call_api('send_group_msg', group_id=group_id, message=welcome_config['temp_msg'])
     
-    
 report_master = get_driver().config.dict().get('master', [])
 @scheduler.scheduled_job('interval', seconds=60*30)
 async def scheduled_report():

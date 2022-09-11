@@ -23,7 +23,7 @@ def get_data(s):
         magic_api = global_config['cyberchef_api'] + "/magic"
         bake_api = global_config['cyberchef_api'] + "/bake"
     except Exception as e:
-        return False
+        return e
     data = {
         "input": s
     }
@@ -74,8 +74,8 @@ async def cc_handler(cmd = Command(), args = CommandArg()):
     user_input = ' '.join(arggs[0:])
     
     data = get_data(user_input)
-    if not data:
-        await cc.send("cyberchef_api not set")
+    if isinstance(data, Exception):
+        await cc.send("Error: " + str(data))
         
     msg = "\n\n".join(data)
     try:
