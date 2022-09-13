@@ -1,5 +1,3 @@
-from re import U
-from tokenize import group
 from nonebot import get_driver, on_command, get_bot, on_notice, on_request, on_message
 from nonebot.permission import SUPERUSER
 from .config import Config
@@ -9,19 +7,10 @@ from nonebot.adapters import Message
 from nonebot.typing import T_State
 from nonebot.adapters import Bot, Event
 from nonebot.rule import to_me
-from nonebot.adapters.onebot.v11 import GroupBanNoticeEvent, MessageSegment, GroupRecallNoticeEvent
+from nonebot.adapters.onebot.v11 import GroupBanNoticeEvent, MessageSegment, GroupRecallNoticeEvent, GroupRequestEvent
 import json
 
 global_config = get_driver().config.dict()
-# report_master = get_driver().config.dict().get('master', [])
-
-# Export something for other plugin
-# export = nonebot.export()
-# export.foo = "bar"
-
-# @export.xxx
-# def some_function():
-#     pass
 
 print(config)
 superUsers = global_config['superusers']
@@ -65,8 +54,8 @@ async def _ban_user(bot: Bot, event: Event):
     for i in user_ids:
         if i in group_session.keys():
             data = group_session[i]
-            # if event.get_user_id() in data['flag']:
-                # await ban_user.finish("你已经投票过了")
+            if event.get_user_id() in data['flag']:
+                await ban_user.finish("你已经投票过了")
                 
             data['flag'].append(event.get_user_id())
             msg = "禁言id：{}\n禁言票数：{}/3".format(i, len(data['flag']))
@@ -219,6 +208,4 @@ async def group_ban_handle(bot: Bot, event: GroupBanNoticeEvent, state: T_State)
 group_recall = on_notice()
 @group_recall.handle()
 async def group_recall_handle(bot: Bot, event: GroupRecallNoticeEvent, state: T_State):
-    # await group_recall.send("是谁撤回了我不说，嘿嘿嘿{}".format(event))
-    
     pass
