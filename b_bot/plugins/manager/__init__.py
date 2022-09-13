@@ -1,5 +1,6 @@
+from re import U
 from tokenize import group
-from nonebot import get_driver, on_command, get_bot, on_notice, on_request
+from nonebot import get_driver, on_command, get_bot, on_notice, on_request, on_message
 from nonebot.permission import SUPERUSER
 from .config import Config
 from nonebot.matcher import Matcher
@@ -9,6 +10,7 @@ from nonebot.typing import T_State
 from nonebot.adapters import Bot, Event
 from nonebot.rule import to_me
 from nonebot.adapters.onebot.v11 import GroupBanNoticeEvent, MessageSegment, GroupRecallNoticeEvent
+import json
 
 global_config = get_driver().config.dict()
 # report_master = get_driver().config.dict().get('master', [])
@@ -30,6 +32,74 @@ send_msg_monitor = on_command("send",permission=SUPERUSER, aliases={'发送'})
 get_friends_list = on_command("friends", permission=SUPERUSER, aliases={'好友列表'})
 get_group_list = on_command("groups",permission=SUPERUSER, aliases={'群列表'})
 exit_group = on_command("exit", permission=SUPERUSER, aliases={'退群'})
+revoke_msg = on_command("revoke", permission=SUPERUSER, aliases={'撤回'}, priority=1, block=True)
+ban_user = on_command("ban", permission=SUPERUSER, aliases={'禁言'}, priority=1, block=True)
+
+def get_message_at(data: str) -> list:
+    qq_list = []
+    data = json.loads(data)
+    try:
+        for msg in data['message']:
+            if msg['type'] == 'at':
+                qq_list.append(int(msg['data']['qq']))
+        return qq_list
+    except Exception:
+        return []
+
+ban_session = {
+    "00000000": {}
+}
+@ban_user.handle()
+async def _ban_user(bot: Bot, event: Event):
+    global ban_session
+    user_ids = get_message_at(event.json())
+    if not user_ids:
+        await ban_user.finish("@一个人去禁言他")
+    group_id = event.group_id
+    try:
+        group_session = ban_session[str(group_id)]
+    except KeyError:
+        ban_session[str(group_id)] = {}
+        group_session = {}
+    
+    for i in user_ids:
+        if i in group_session.keys():
+            data = group_session[i]
+            # if event.get_user_id() in data['flag']:
+                # await ban_user.finish("你已经投票过了")
+                
+            data['flag'].append(event.get_user_id())
+            msg = "禁言id：{}\n禁言票数：{}/3".format(i, len(data['flag']))
+            await ban_user.send(msg)
+            if len(data['flag']) == 3:
+                await bot.call_api('set_group_ban', group_id=group_id, user_id=i, duration=600)
+                group_session.pop(i)
+                ban_session[str(group_id)] = group_session
+                
+        else:
+            new_ban_session = {
+                "id": i,
+                "group_id": group_id,
+                "flag": [event.get_user_id()]
+            }
+            group_session[i] = new_ban_session
+            ban_session[str(group_id)] = group_session
+            msg = "禁言id：{}\n禁言票数：{}/3".format(i, len(new_ban_session['flag']))
+            await ban_user.finish(msg)
+        
+    
+    
+@revoke_msg.handle()
+async def _revoke_msg(bot: Bot, event: Event, state: T_State):
+    # msg_id = event.get_message()
+    if event.reply:
+        msg_id = event.reply.message_id
+        try:
+            await bot.delete_msg(message_id=msg_id)
+            await revoke_msg.finish()
+        except Exception as e:
+            await revoke_msg.finish()
+
 
 @send_msg_monitor.handle()
 async def handle_first_receive(bot:Bot,matcher: Matcher, args: Message = CommandArg()):
