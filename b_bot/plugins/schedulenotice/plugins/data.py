@@ -111,55 +111,42 @@ def get_classes_by_week(week, filepath):
     week_cnt = week
     res = {}
     for week in range(1,8):
-        # print("=======================week {}===星期{}=====================".format(week_cnt, week))
-        # print("今天是星期{}".format(week))
         tmp_weekday = "星期{}".format(week)
         res[tmp_weekday] = []
         today_class = j[str(week)]
         for rank in range(1,6):
-            # print("第{}节课".format(rank))
             classes = today_class[str(rank)]
             if not classes:
-                # print("没有课")
                 continue
-            for c in classes:
-                if not c:
-                    continue
-                c_name = c["class_name"]
-                c_weeks = c["weeks"]
-                c_classroom = c["classroom"]
-                if week_cnt in c_weeks:
-                    print("{} {} {}".format(c_name, c_weeks, c_classroom))
-                    res[tmp_weekday].append("第{}节课 {} {}".format(rank, c_name, c_classroom))
+            c_name = classes[0]["class_name"]
+            c_weeks = classes[0]["weeks"]
+            c_classroom = classes[0]["classroom"]
+            if week_cnt in c_weeks:
+                res[tmp_weekday].append("第{}节课 {} {}".format(rank, c_name, c_classroom))
+            # for c in classes:
+            #     if not c:
+            #         continue
+            #     c_name = c["class_name"]
+            #     c_weeks = c["weeks"]
+            #     c_classroom = c["classroom"]
+            #     if week_cnt in c_weeks:
+            #         print("{} {} {}".format(c_name, c_weeks, c_classroom))
+            #         res[tmp_weekday].append("第{}节课 {} {}".format(rank, c_name, c_classroom))
                     
     # format the result
-    tmp_res = ""
-    for week in res.keys():
-        tmp_res += week + ":\n"
-        for c in res[week]:
-            tmp_res += c + "\n"
-        tmp_res += "\n"
-    return tmp_res
-    
-# get_classes_by_week(2, "soft.html")
-# # if __name__ == "__main__":
-# #     now_week = 1
-# #     j = generate_json("/app/data/test.html")
-#     for week_cnt in range(0, 18):
-            
-#         for week in range(1,8):
-#             print("=======================week {}===星期{}=====================".format(week_cnt, week))
-#             print("今天是星期{}".format(week))
-#             today_class = j[str(week)]
-#             for rank in range(1,6):
-#                 print("第{}节课".format(rank))
-#                 classes = today_class[str(rank)]
-#                 if not classes:
-#                     # print("没有课")
-#                     continue
-#                 for c in classes:
-#                     c_name = c["class_name"]
-#                     c_weeks = c["weeks"]
-#                     c_classroom = c["classroom"]
-#                     if week_cnt in c_weeks:
-#                         print("{} {} {}".format(c_name, c_weeks, c_classroom))
+    return res
+
+
+def get_class_by_week_and_day(week_cnt, day, filepath):
+    j = generate_json(filepath)
+    res = {}
+    today_class = j[str(day)]
+    for rank in range(1,6):
+        classes = today_class[str(rank)]
+        if not classes:
+            continue
+        
+        if week_cnt in classes[0]['weeks']:
+            res[rank] = classes[0]
+        
+    return res

@@ -1,9 +1,10 @@
 from asyncio import events
+from curses.ascii import isdigit
 from json import load
 import json
 from pathlib import Path
 from tokenize import group
-from nonebot import get_driver, on_command, get_bot, on_notice, on_request
+from nonebot import get_driver, on_command, get_bot, on_notice, on_request,require
 from nonebot.permission import SUPERUSER
 
 from ..txt2img import txt2img
@@ -18,6 +19,16 @@ from nonebot.adapters.onebot.v11 import GroupBanNoticeEvent, MessageSegment, Gro
 import datetime
 import requests
 from ..pic_gen import img_to_b64
+import os
+
+
+notice_time = {
+    1: "08:00",
+    2: "09:50",
+    3: "14:00",
+    4: "15:50",
+    5: "19:30"
+}
 
 resource_dir = str(Path() / 'data')
 global_config = get_driver().config.dict()
@@ -26,9 +37,106 @@ start_week = datetime.datetime.strptime(start_week, '%Y-%m-%d')
 start_week = start_week.isocalendar()[1]
 now_week = datetime.datetime.now().isocalendar()[1]
 
-get_schedule_monitor = on_command("schedule",aliases={'查询课表'})
-download_schdule_monitor = on_command("downloadSchedule", aliases={'下载课表'})
-load_schedule_from_info_monitor = on_command("loadSchedule", aliases={'加载课表'})
+get_schedule_monitor = on_command("schedule",aliases={'查询课表'},priority=1, block=True, rule=to_me())
+get_today_schedule_monitor =  on_command("today_schedule", aliases={'今日课表'},priority=1, block=True, rule=to_me())
+download_schdule_monitor = on_command("downloadSchedule", aliases={'下载课表'},priority=1, block=True, rule=to_me())
+load_schedule_from_info_monitor = on_command("loadSchedule", aliases={'加载课表'},priority=1, block=True, rule=to_me())
+auto_notice_switch = on_command("schedule_notice", aliases={'课表提醒'}, priority=1, block=True, rule=to_me())
+scheduler = require("nonebot_plugin_apscheduler").scheduler
+
+
+@auto_notice_switch.handle()
+async def _auto_notice_handle(bot: Bot, event: Event, matcher: Matcher, args: Message = CommandArg()):
+    welcome_config = json.loads(open(os.path.join(resource_dir, 'config.json'), 'r', encoding='utf-8').read())
+    argss = args.extract_plain_text().split()
+    if len(argss ) == 0:
+        await auto_notice_switch.finish("请输入开/关")
+    ks = welcome_config.keys()
+    if "notice_id" not in ks:
+        welcome_config['notice_id'] = []
+        filestream = open(os.path.join(resource_dir, 'config.json'), 'w')
+        filestream.write(json.dumps(welcome_config))
+        filestream.close()
+    welcome_config = json.loads(open(os.path.join(resource_dir, 'config.json'), 'r', encoding='utf-8').read())
+    notice_id_list = welcome_config['notice_id']
+    if argss[0] == "开":
+        notice_id_list.append(event.get_user_id())
+    elif argss[0] == '关':
+        notice_id_list.remove(event.get_user_id())
+        
+    welcome_config['notice_id'] = notice_id_list
+    with open(os.path.join(resource_dir, 'config.json'), 'w') as f:
+        f.write(json.dumps(welcome_config))
+    await auto_notice_switch.finish("设置成功")
+        
+# add notice_time to scheduler
+@scheduler.scheduled_job('interval', seconds=55)
+async def _notice():
+    week = now_week - start_week + 2
+    weekday = datetime.datetime.now().weekday() + 1
+    # now_time = datetime.datetime.now(tz=datetime.timezone.tzname('Asia/Shanghai')).strftime('%H:%M')
+    asia_timezone = datetime.timezone(datetime.timedelta(hours=8))
+    now_time = datetime.datetime.now(asia_timezone)
+    
+    for k,v in notice_time.items():
+        if now_time == v:
+            rank = k
+            bot = get_bot()
+            config_json = json.loads(open(os.path.join(resource_dir, 'config.json'), 'r', encoding='utf-8').read())
+            notice_ids = config_json['notice_id']
+            for idd in notice_ids:
+                # send private msg
+                filepath = resource_dir + '/' + 'schedules/' + "{}.html".format(idd)
+                today_class = data.get_class_by_week_and_day(week, weekday, filepath)
+                if rank not in today_class.keys():
+                    continue
+                now_class = today_class[rank]
+                class_name = now_class['class_name']
+                classroom = now_class['classroom']
+                await bot.call_api("send_private_msg", user_id=idd, message="现在是第{}节课:{}".format(rank, class_name+classroom))
+                
+                
+        
+
+@scheduler.scheduled_job('cron', day_of_week='mon-fri', hour=7, minute=30, second=0)
+async def daily_notice():
+    welcome_config = json.loads(open(os.path.join(resource_dir, 'config.json'), 'r', encoding='utf-8').read())
+    ks = welcome_config.keys()
+    if "schedule_notice_group" not in ks:
+        welcome_config["schedule_notice_group"] = []
+        filestream = open(os.path.join(resource_dir, 'config.json'), 'w')
+        filestream.write(json.dumps(welcome_config))
+        filestream.close()
+        return
+    week = now_week - start_week + 2
+    weekday = datetime.datetime.now().weekday() + 1
+    msg = ("今天是第{}周，周{}，发送“今日课表”查看今天的课表".format(week, weekday))
+    for group_id in welcome_config["schedule_notice_group"]:
+        bot = get_bot()
+        await bot.call_api('send_group_msg', group_id=group_id, message=msg)
+
+
+@get_today_schedule_monitor.handle()
+async def _today_schedule(bot: Bot, event: Event, matcher: Matcher, args: Message = CommandArg()):
+    week = now_week - start_week + 2
+    weekday = datetime.datetime.now().weekday() + 1
+    
+    qq_id = event.get_user_id()
+    filepath = resource_dir + '/' + 'schedules/' + "{}.html".format(qq_id)
+    if not Path(filepath).exists():
+        await get_today_schedule_monitor.finish("请先下载课表")
+        
+    res = data.get_class_by_week_and_day(week, weekday, filepath)
+    tmp_res = ""
+    for rank in res.keys():
+        t = "第{}讲({})：{} {}".format(rank, notice_time[rank], res[rank]['class_name'], res[rank]['classroom'])
+        tmp_res += t + '\n'
+    # await get_schedule_monitor.send(str(res))
+    # await get_schedule_monitor.finish(str(tmp_res))
+    await get_today_schedule_monitor.send("今天是第{}周，周{}".format(week, weekday))
+    msg = "今天是第{}周，周{}".format(week, weekday) + "\n" + str(tmp_res)
+    await get_today_schedule_monitor.finish(str(msg))
+
 
 @get_schedule_monitor.handle()
 async def schedule_handle(bot: Bot, event: Event, state: T_State):
@@ -44,8 +152,15 @@ async def schedule_handle(bot: Bot, event: Event, state: T_State):
             if not Path(filepath).exists():
                 await get_schedule_monitor.send("您还没有课表，请先下载课表")
                 await get_schedule_monitor.finish()
-                
-            await get_schedule_monitor.finish(str(data.get_classes_by_week(week, filepath)))
+            res = data.get_classes_by_week(week, filepath)
+            tmp_res = ""
+            for week in res.keys():
+                tmp_res += week + ":\n"
+                for c in res[week]:
+                    tmp_res += c + "\n"
+                tmp_res += "\n"
+            # await get_schedule_monitor.send(str(res))
+            await get_schedule_monitor.finish(str(tmp_res))
         else:
             await get_schedule_monitor.finish("请输入正确的周数")
     else:

@@ -12,6 +12,8 @@ data/img_history/*
 data/schedules/*
 data/russian/*
 *.yaml
+covid_by_19/
+data/schedules/*.html
 
 # C extensions
 *.so
