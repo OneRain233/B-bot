@@ -22,7 +22,7 @@ resource_dir = Path() / "data" / "resources"
 # reply = on_keyword(keywords=['?', '？'], priority=5)
 org_welcome = on_command("welcome", priority=5)
 # 问卷
-quiz = on_command("quiz", aliases={"问卷", "问卷调查"}, priority=5)
+quiz = on_command("quiz", aliases={"问卷", "问卷调查"}, priority=1, block=False)
 
 @org_welcome.handle()
 async def handle_first_receive(bot: Bot, event: Event, state: T_State):
