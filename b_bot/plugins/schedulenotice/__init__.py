@@ -76,7 +76,7 @@ async def _notice():
     weekday = datetime.datetime.now().weekday() + 1
     # now_time = datetime.datetime.now(tz=datetime.timezone.tzname('Asia/Shanghai')).strftime('%H:%M')
     asia_timezone = datetime.timezone(datetime.timedelta(hours=8))
-    now_time = datetime.datetime.now(asia_timezone)
+    now_time = datetime.datetime.now(asia_timezone).strftime('%H:%M')
     
     for k,v in notice_time.items():
         if now_time == v:
