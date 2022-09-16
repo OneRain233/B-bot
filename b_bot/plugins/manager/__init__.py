@@ -23,6 +23,8 @@ get_group_list = on_command("groups",permission=SUPERUSER, aliases={'群列表'}
 exit_group = on_command("exit", permission=SUPERUSER, aliases={'退群'})
 revoke_msg = on_command("revoke", permission=SUPERUSER, aliases={'撤回'}, priority=1, block=True)
 ban_user = on_command("禁言", aliases={'ban'}, priority=1, block=True)
+kick_user = on_command("踢人", aliases={'kick'}, priority=1, block=True)
+
 
 def get_message_at(data: str) -> list:
     qq_list = []
@@ -38,6 +40,58 @@ def get_message_at(data: str) -> list:
 ban_session = {
     "00000000": {}
 }
+
+kick_session = {
+    
+}
+
+@kick_user.handle()
+async def _kick_user_handler(bot: Bot, event: Event):
+    global kick_session
+    user_ids = []
+    try:
+        user_ids.append(event.reply.sender.user_id)
+    except:
+        user_ids = get_message_at(event.json())
+    if not user_ids:
+        await kick_user.finish("@一个人去kick掉他")
+    group_id = event.group_id
+    try:
+        group_session = kick_session[str(group_id)]
+    except KeyError:
+        kick_session[str(group_id)] = {}
+        group_session = {}
+    
+    for i in user_ids:
+        if int(i) == int(bot.self_id):
+            await kick_user.finish("不要踢走弱弱bot")
+        if str(i) in superUsers:
+            await kick_user.finish("不要踢走弱弱superuser")
+        if i in group_session.keys():
+            data = group_session[i]
+            if event.get_user_id() in data['flag']:
+                await kick_user.finish("你已经投票过了")
+                
+            data['flag'].append(event.get_user_id())
+            msg = "踢出id：{}\n踢出票数：{}/5".format(i, len(data['flag']))
+            await kick_user.send(msg +"\n"+ MessageSegment.at(i))
+            if len(data['flag']) == 5:
+                await bot.call_api('set_group_kick', group_id=group_id, user_id=i)
+                group_session.pop(i)
+                kick_session[str(group_id)] = group_session
+                
+        else:
+            new_kick_session = {
+                "id": i,
+                "group_id": group_id,
+                "flag": [event.get_user_id()]
+            }
+            group_session[i] = new_kick_session
+            kick_session[str(group_id)] = group_session
+            msg = "踢出id：{}\n踢出票数：{}/5".format(i, len(new_kick_session['flag']))
+            await ban_user.finish(msg +"\n"+ MessageSegment.at(i))
+        
+
 @ban_user.handle()
 async def _ban_user(bot: Bot, event: Event):
     global ban_session
@@ -68,7 +122,7 @@ async def _ban_user(bot: Bot, event: Event):
                 
             data['flag'].append(event.get_user_id())
             msg = "禁言id：{}\n禁言票数：{}/3".format(i, len(data['flag']))
-            await ban_user.send(msg)
+            await ban_user.send(msg +"\n"+ MessageSegment.at(i))
             if len(data['flag']) == 3:
                 await bot.call_api('set_group_ban', group_id=group_id, user_id=i, duration=600)
                 group_session.pop(i)
@@ -83,7 +137,7 @@ async def _ban_user(bot: Bot, event: Event):
             group_session[i] = new_ban_session
             ban_session[str(group_id)] = group_session
             msg = "禁言id：{}\n禁言票数：{}/3".format(i, len(new_ban_session['flag']))
-            await ban_user.finish(msg)
+            await ban_user.finish(msg +"\n"+ MessageSegment.at(i))
         
     
     
