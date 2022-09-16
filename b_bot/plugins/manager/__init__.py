@@ -22,13 +22,13 @@ get_friends_list = on_command("friends", permission=SUPERUSER, aliases={'好友�
 get_group_list = on_command("groups",permission=SUPERUSER, aliases={'群列表'})
 exit_group = on_command("exit", permission=SUPERUSER, aliases={'退群'})
 revoke_msg = on_command("revoke", permission=SUPERUSER, aliases={'撤回'}, priority=1, block=True)
-ban_user = on_command("ban", aliases={'禁言'}, priority=1, block=True)
+ban_user = on_command("禁言", aliases={'ban'}, priority=1, block=True)
 
 def get_message_at(data: str) -> list:
     qq_list = []
     data = json.loads(data)
     try:
-        for msg in data['message']:
+        for msg in data['original_message']:
             if msg['type'] == 'at':
                 qq_list.append(int(msg['data']['qq']))
         return qq_list
@@ -41,7 +41,12 @@ ban_session = {
 @ban_user.handle()
 async def _ban_user(bot: Bot, event: Event):
     global ban_session
-    user_ids = get_message_at(event.json())
+    # await ban_user.send(event.json())
+    user_ids = []
+    try:
+        user_ids.append(event.reply.sender.user_id)
+    except:
+        user_ids = get_message_at(event.json())
     if not user_ids:
         await ban_user.finish("@一个人去禁言他")
     group_id = event.group_id
@@ -52,6 +57,10 @@ async def _ban_user(bot: Bot, event: Event):
         group_session = {}
     
     for i in user_ids:
+        if int(i) == int(bot.self_id):
+            await ban_user.finish("不要禁言弱弱bot")
+        if str(i) in superUsers:
+            await ban_user.finish("不要禁言弱弱superuser")
         if i in group_session.keys():
             data = group_session[i]
             if event.get_user_id() in data['flag']:
