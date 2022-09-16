@@ -3,6 +3,7 @@ from curses.ascii import isdigit
 from json import load
 import json
 from pathlib import Path
+from time import time
 from tokenize import group
 from nonebot import get_driver, on_command, get_bot, on_notice, on_request,require
 from nonebot.permission import SUPERUSER
@@ -32,10 +33,11 @@ notice_time = {
 
 resource_dir = str(Path() / 'data')
 global_config = get_driver().config.dict()
+asia_timezone = datetime.timezone(datetime.timedelta(hours=8))
 start_week = global_config['start_week']
 start_week = datetime.datetime.strptime(start_week, '%Y-%m-%d')
 start_week = start_week.isocalendar()[1]
-now_week = datetime.datetime.now().isocalendar()[1]
+now_week = datetime.datetime.now(asia_timezone).isocalendar()[1]
 
 get_schedule_monitor = on_command("schedule",aliases={'查询课表'},priority=1, block=True, rule=to_me())
 get_today_schedule_monitor =  on_command("today_schedule", aliases={'今日课表'},priority=1, block=True, rule=to_me())
@@ -75,11 +77,14 @@ async def _notice():
     week = now_week - start_week + 2
     weekday = datetime.datetime.now().weekday() + 1
     # now_time = datetime.datetime.now(tz=datetime.timezone.tzname('Asia/Shanghai')).strftime('%H:%M')
-    asia_timezone = datetime.timezone(datetime.timedelta(hours=8))
-    now_time = datetime.datetime.now(asia_timezone).strftime('%H:%M')
+    # asia_timezone = datetime.timezone(datetime.timedelta(hours=8))
+    now_time = datetime.datetime.now(asia_timezone)
+    # 提前20分钟提醒
+    time_20 = now_time + datetime.timedelta(minutes=20)
+    time_20 = time_20.strftime('%H:%M')
     
     for k,v in notice_time.items():
-        if now_time == v:
+        if time_20 == v:
             rank = k
             bot = get_bot()
             config_json = json.loads(open(os.path.join(resource_dir, 'config.json'), 'r', encoding='utf-8').read())

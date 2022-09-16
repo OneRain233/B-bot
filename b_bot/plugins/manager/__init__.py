@@ -22,7 +22,7 @@ get_friends_list = on_command("friends", permission=SUPERUSER, aliases={'好友�
 get_group_list = on_command("groups",permission=SUPERUSER, aliases={'群列表'})
 exit_group = on_command("exit", permission=SUPERUSER, aliases={'退群'})
 revoke_msg = on_command("revoke", permission=SUPERUSER, aliases={'撤回'}, priority=1, block=True)
-ban_user = on_command("ban", permission=SUPERUSER, aliases={'禁言'}, priority=1, block=True)
+ban_user = on_command("ban", aliases={'禁言'}, priority=1, block=True)
 
 def get_message_at(data: str) -> list:
     qq_list = []
