@@ -89,7 +89,7 @@ async def _kick_user_handler(bot: Bot, event: Event):
             group_session[i] = new_kick_session
             kick_session[str(group_id)] = group_session
             msg = "踢出id：{}\n踢出票数：{}/5".format(i, len(new_kick_session['flag']))
-            await ban_user.finish(msg +"\n"+ MessageSegment.at(i))
+            await kick_user.finish(msg +"\n"+ MessageSegment.at(i))
         
 
 @ban_user.handle()

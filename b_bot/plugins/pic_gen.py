@@ -23,7 +23,7 @@ font_dir = Path() / "data" / "fonts"
 zh_font_file = font_dir / "font.ttf"
 # emoji_font_file = os.path.join(resource_dir, 'consola.ttf')
 template_file = resource_dir / "template.jpg"
-logo_file = resource_dir / "logo.jpg"
+logo_file = resource_dir / "logo.png"
 
 def line_break(text: str, max_width: int) -> str:
     """
@@ -46,7 +46,7 @@ def img_to_b64(pic: Image.Image) -> str:
 async def make_jpg_new(text: str) -> Image.Image:
     logo = Image.open(logo_file)
     # emoji_font = ImageFont.truetype(emoji_font_file, size=30)
-    zh_font = ImageFont.truetype(str(zh_font_file), size=30)
+    zh_font = ImageFont.truetype(str(zh_font_file), size=35)
     name_font = ImageFont.truetype(str(zh_font_file), size=50)
     
     text1 = "欢迎"
