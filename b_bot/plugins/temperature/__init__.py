@@ -29,13 +29,13 @@ async def _temperature_handler(bot: Bot, event: Event, state: T_State):
     await temperatre_report.finish(res)
     
     
-@scheduler.scheduled_job('cron', hour=7, minute=30)
-async def _report():
+# @scheduler.scheduled_job('cron', hour=7, minute=30)
+# async def _report():
 
-    report_master = get_driver().config.dict().get('master', [])
-    if not report_master:
-        return
-    res = report_temp()
-    bot = get_bot()
-    for master in report_master:
-        await bot.send_private_msg(user_id=master, message=res)
+#     report_master = get_driver().config.dict().get('master', [])
+#     if not report_master:
+#         return
+#     res = report_temp()
+#     bot = get_bot()
+#     for master in report_master:
+#         await bot.send_private_msg(user_id=master, message=res)

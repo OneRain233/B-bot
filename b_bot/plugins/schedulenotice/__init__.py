@@ -72,8 +72,9 @@ async def _auto_notice_handle(bot: Bot, event: Event, matcher: Matcher, args: Me
     await auto_notice_switch.finish("设置成功")
         
 # add notice_time to scheduler
-@scheduler.scheduled_job('interval', seconds=55)
+@scheduler.scheduled_job('interval', seconds=30)
 async def _notice():
+    get_driver().logger.info("30s notice check")
     week = now_week - start_week + 2
     weekday = datetime.datetime.now().weekday() + 1
     # now_time = datetime.datetime.now(tz=datetime.timezone.tzname('Asia/Shanghai')).strftime('%H:%M')
@@ -82,9 +83,10 @@ async def _notice():
     # 提前20分钟提醒
     time_20 = now_time + datetime.timedelta(minutes=20)
     time_20 = time_20.strftime('%H:%M')
+    time_now = now_time.strftime('%H:%M')
     
     for k,v in notice_time.items():
-        if time_20 == v:
+        if time_20 == v or time_now == v:
             rank = k
             bot = get_bot()
             config_json = json.loads(open(os.path.join(resource_dir, 'config.json'), 'r', encoding='utf-8').read())
@@ -98,7 +100,7 @@ async def _notice():
                 now_class = today_class[rank]
                 class_name = now_class['class_name']
                 classroom = now_class['classroom']
-                await bot.call_api("send_private_msg", user_id=idd, message="现在是第{}节课:{}".format(rank, class_name+classroom))
+                await bot.call_api("send_private_msg", user_id=idd, message="第{}节课:{}".format(rank, class_name+classroom))
                 
                 
         

@@ -45,8 +45,8 @@ def parse_detail_info(s) -> Dict:
         return {}
     info_pattern = re.compile(r'[A-Z][0-9]*\s(.*?\(.+?\))\s*(.*?周)\s([A-Z][0-9]*|.*场|NoRoom)')
     info = info_pattern.match(s)
-    print(s)
-    print("------------------",info)
+    # print(s)
+    # print("------------------",info)
     if info:
         res = {
             "class_name": info.group(1),
@@ -62,12 +62,12 @@ def parse_baseinfo(s):
 
     if not s:
         return None
-    print(s)
+    # print(s)
     # replace \0a with \n
     s = s.replace("\0a", "")
     base_pattern = re.compile(r'[A-Z][0-9]*\s.*?\(.+?\)\s*.*?周\s[A-Z][0-9]*|.*场|NoRoom', re.MULTILINE)
     base = base_pattern.findall(s)
-    print(base)
+    # print(base)
     res = []
     if not base:
         return res
@@ -78,7 +78,7 @@ def parse_baseinfo(s):
         res.append(parse_detail_info(i))
     
 
-    print("+++++++++++++++++++++",res)
+    # print("+++++++++++++++++++++",res)
     return res
 
 def generate_json(filepath):
@@ -150,3 +150,14 @@ def get_class_by_week_and_day(week_cnt, day, filepath):
             res[rank] = classes[0]
         
     return res
+    """
+    res = {1: {'class_name': 'Lab,G1\xa0/\xa0Web应用开发(杨柳)', 'weeks': [2, 3, 4, 5, 7, 8, 9, 10, 11, 12], 'classroom': 'X9318'}, 
+            2: {'class_name': 'Lab,G1\xa0/\xa0Web应用开发(杨柳)', 'weeks': [2, 3, 4, 5, 7, 8, 9, 10, 11, 12], 'classroom': 'X9318'}, 
+            3: {'class_name': 'L\xa0/\xa0软件工程理论(赵宏宇)', 'weeks': [2, 4, 5, 7, 8, 9, 10, 11, 12], 'classroom': 'X30555'}, 
+            4: {'class_name': 'L\xa0/\xa0形式语言和有限自动机(Turgay Celik)', 'weeks': [4, 5, 7, 8, 9, 10, 11, 12, 13, 14], 'classroom': 'X30549'}, 
+            5: {'class_name': 'L\xa0/\xa0操作系统(Jie XU,滕飞)', 'weeks': [2, 4, 5, 7, 8, 9, 10, 11, 12], 'classroom': 'X30517'}}
+    """
+    
+if __name__ == "__main__":
+    res = get_class_by_week_and_day(4, 1, "/app/data/schedules/76054204.html")
+    print(res)
