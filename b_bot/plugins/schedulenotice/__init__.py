@@ -76,7 +76,7 @@ async def _auto_notice_handle(bot: Bot, event: Event, matcher: Matcher, args: Me
 async def _notice():
     get_driver().logger.info("30s notice check")
     week = now_week - start_week + 2
-    weekday = datetime.datetime.now().weekday() + 1
+    weekday = datetime.datetime.now(asia_timezone).weekday() + 1
     # now_time = datetime.datetime.now(tz=datetime.timezone.tzname('Asia/Shanghai')).strftime('%H:%M')
     # asia_timezone = datetime.timezone(datetime.timedelta(hours=8))
     now_time = datetime.datetime.now(asia_timezone)

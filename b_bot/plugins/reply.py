@@ -83,12 +83,12 @@ async def scheduled_job():
         bot = get_bot()
         await bot.call_api('send_group_msg', group_id=group_id, message=welcome_config['temp_msg'])
     
-report_master = get_driver().config.dict().get('master', [])
-@scheduler.scheduled_job('interval', seconds=60*30)
-async def scheduled_report():
-    if report_master == []:
-        return
+# report_master = get_driver().config.dict().get('master', [])
+# @scheduler.scheduled_job('interval', seconds=60*30)
+# async def scheduled_report():
+#     if report_master == []:
+#         return
 
-    bot = get_bot()
-    for master in report_master:
-        await bot.send_private_msg(user_id=master, message="我还活着!!")
+#     bot = get_bot()
+#     for master in report_master:
+#         await bot.send_private_msg(user_id=master, message="我还活着!!")
